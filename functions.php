@@ -6,35 +6,84 @@
 
 // Enqueue the parent styles
 function theme_enqueue_styles() {
-    wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
+  wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
 // admin.js for products 
 // change menu order based on New status
 function product_admin_script() {
-    global $post_type;
-    if( $post_type === 'product' )
-    wp_enqueue_script( 'product-admin-script', get_stylesheet_directory_uri() . '/admin.js', array('jquery'), '1.2' );
+  global $post_type;
+  if( $post_type === 'product' )
+  wp_enqueue_script( 'product-admin-script', get_stylesheet_directory_uri() . '/js/admin.js', array('jquery'), '1.2' );
 }
 add_action( 'admin_print_scripts-post-new.php', 'product_admin_script', 11 );
 add_action( 'admin_print_scripts-post.php', 'product_admin_script', 11 );
 
 // Front end custom JS
 function adelman_script() {
-  wp_register_script('adelman-script', get_stylesheet_directory_uri() . '/adelman.js', array('jquery'),'1.2', true);
+  wp_register_script('adelman-script', get_stylesheet_directory_uri() . '/js/adelman.js', array('jquery'),'1.2', true);
   wp_enqueue_script('adelman-script');
 }
 add_action( 'wp_enqueue_scripts', 'adelman_script' ); 
 
 // Admin stylesheet
 function adelman_admin_theme_style() {
-    wp_enqueue_style('adelman-admin-style', get_stylesheet_directory_uri() . '/admin.css');
+  wp_enqueue_style('adelman-admin-style', get_stylesheet_directory_uri() . '/admin.css');
 }
 add_action('admin_enqueue_scripts', 'adelman_admin_theme_style');
 
 // Hide SEO columns
 add_filter( 'wpseo_use_page_analysis', '__return_false' );
+
+// **********************************************************************// 
+// ! Include etheme CSS and JS
+// **********************************************************************// 
+
+// Included only to override the etheme.js file for "mega search"
+if(!function_exists('etheme_enqueue_styles')) {
+  function etheme_enqueue_styles() {
+    global $etheme_responsive, $etheme_theme_data;
+    $etheme_theme_data = wp_get_theme( 'legenda' );
+    $custom_css = etheme_get_option('custom_css');
+    if ( !is_admin() ) {
+      wp_enqueue_style("style",get_stylesheet_directory_uri().'/style.css', array(), $etheme_theme_data->Version);
+      wp_enqueue_style("font-lato",et_http()."fonts.googleapis.com/css?family=Lato:300,400,700,300italic");
+      wp_enqueue_style("open-sans",et_http()."fonts.googleapis.com/css?family=Open+Sans:300,400,700,300italic");
+
+      if($etheme_responsive){
+        wp_enqueue_style("responsive",get_template_directory_uri().'/css/responsive.css', array(), $etheme_theme_data->Version);
+      }
+
+      if($custom_css) {
+        wp_enqueue_style("custom",get_template_directory_uri().'/custom.css', array(), $etheme_theme_data->Version);  
+      }
+
+      $etheme_color_version = etheme_get_option('main_color_scheme');
+      
+      if($etheme_color_version=='dark') {
+        wp_enqueue_style("dark",get_template_directory_uri().'/css/dark.css', array(), $etheme_theme_data->Version);  
+      }
+
+      $script_depends = array();
+
+      if(class_exists('WooCommerce')) {
+        $script_depends = array('wc-add-to-cart-variation');
+      }
+          
+      wp_enqueue_script('head', get_template_directory_uri().'/js/head.js'); // modernizr, owl carousel, Swiper, FullWidth helper
+      if(etheme_get_option('product_img_hover') == 'tooltip')
+        wp_enqueue_script('tooltip', get_template_directory_uri().'/js/tooltip.js');
+      wp_enqueue_script('jquery');
+      wp_enqueue_script('all_plugins', get_template_directory_uri().'/js/plugins.min.js',$script_depends,false,true);
+      wp_enqueue_script('waypoints');
+      wp_enqueue_script('etheme', get_stylesheet_directory_uri().'/js/etheme.js',$script_depends,false,true);
+      wp_localize_script( 'etheme', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'noresults' => __('No results were found!', ETHEME_DOMAIN)));
+    }
+  }
+}
+
+add_action( 'wp_enqueue_scripts', 'etheme_enqueue_styles', 30);
 
 
 // **********************************************************************// 
@@ -120,7 +169,7 @@ function adelman_product_artist() {
   <?php if( $providers ): ?>
     <?php foreach( $providers as $provider ): ?>
       Artist: <a href="<?php echo get_permalink( $provider->ID ); ?>">
-        <?php echo get_the_title( $provider->ID ); ?>
+      <?php echo get_the_title( $provider->ID ); ?>
       </a>
     <?php endforeach; ?>
   <?php endif; 
@@ -136,10 +185,10 @@ if(!function_exists('etheme_get_single_product_sidebar')) {
     $orientation = get_field('orientation');
 
     $result = array(
-        'position' => 'left',
-        'responsive' => '',
-        'images_span' => '5',
-        'meta_span' => '4'
+      'position' => 'left',
+      'responsive' => '',
+      'images_span' => '5',
+      'meta_span' => '4'
     );
     
     $result['single_product_sidebar'] = is_active_sidebar('single-sidebar');
@@ -168,120 +217,120 @@ if(!function_exists('etheme_get_single_product_sidebar')) {
 // ! Create products slider by args
 // **********************************************************************//
 if(!function_exists('etheme_create_slider')) {
-    function etheme_create_slider($args, $slider_args = array()){//, $title = false, $shop_link = true, $slider_type = false, $items = '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]', $style = 'default'
-      global $wpdb, $woocommerce_loop;
-      $product_per_row = etheme_get_option('prodcuts_per_row');
-      extract(shortcode_atts(array( 
-        'title' => false,
-        'shop_link' => false,
-        'slider_type' => false,
-        'items' => '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]',
-        'style' => 'default',
-        'block_id' => false
-      ), $slider_args));
+  function etheme_create_slider($args, $slider_args = array()){//, $title = false, $shop_link = true, $slider_type = false, $items = '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]', $style = 'default'
+    global $wpdb, $woocommerce_loop;
+    $product_per_row = etheme_get_option('prodcuts_per_row');
+    extract(shortcode_atts(array( 
+      'title' => false,
+      'shop_link' => false,
+      'slider_type' => false,
+      'items' => '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]',
+      'style' => 'default',
+      'block_id' => false
+    ), $slider_args));
+    
+      $box_id = rand(1000,10000);
+      $multislides = new WP_Query( $args );
+      $shop_url = get_permalink(woocommerce_get_page_id('shop'));
+      $class = $title_output = '';
+      if(!$slider_type) {
+        $woocommerce_loop['lazy-load'] = true;
+        $woocommerce_loop['style'] = $style;
+      }
       
-        $box_id = rand(1000,10000);
-        $multislides = new WP_Query( $args );
-        $shop_url = get_permalink(woocommerce_get_page_id('shop'));
-        $class = $title_output = '';
-        if(!$slider_type) {
-          $woocommerce_loop['lazy-load'] = true;
-          $woocommerce_loop['style'] = $style;
-        }
-        
-        if($multislides->post_count > 1) {
-            $class .= ' posts-count-gt1';
-        }
-        if($multislides->post_count < 4) {
-            $class .= ' posts-count-lt4';
-        }
-        if ( $multislides->have_posts() ) :
-            if ($title) {
-                $title_output = '<h2 class="title"><span>'.$title.'</span></h2>';
-            }   
-              echo '<div class="slider-container '.$class.'">';
-                  echo $title_output;
-                  if($shop_link && $title)
-                    echo '<a href="'.$shop_url.'" class="show-all-posts hidden-tablet hidden-phone">'.__('View more products', ETHEME_DOMAIN).'</a>';
-                  echo '<div class="items-slider products-slider '.$slider_type.'-container slider-'.$box_id.'">';
-                        echo '<div class="slider '.$slider_type.'-wrapper">';
-                        $_i=0;
-                          if($block_id && $block_id != '' && et_get_block($block_id) != '') {
-                              echo '<div class=" '.$slider_type.'-slide">';
-                                  echo et_get_block($block_id);
-                              echo '</div><!-- slide-item -->';
-                          }
-                            while ($multislides->have_posts()) : $multislides->the_post();
-                                $_i++;
-                                
-                                if(class_exists('Woocommerce')) {
-                                    global $product;
-                                    if (!$product->is_visible()) continue; 
-                                    echo '<div class="slide-item product-slide '.$slider_type.'-slide">';
-                                        woocommerce_get_template_part( 'content', 'product' );
-                                    echo '</div><!-- slide-item -->';
-                                }
+      if($multislides->post_count > 1) {
+          $class .= ' posts-count-gt1';
+      }
+      if($multislides->post_count < 4) {
+          $class .= ' posts-count-lt4';
+      }
+      if ( $multislides->have_posts() ) :
+          if ($title) {
+              $title_output = '<h2 class="title"><span>'.$title.'</span></h2>';
+          }   
+            echo '<div class="slider-container '.$class.'">';
+                echo $title_output;
+                if($shop_link && $title)
+                  echo '<a href="'.$shop_url.'" class="show-all-posts hidden-tablet hidden-phone">'.__('View more products', ETHEME_DOMAIN).'</a>';
+                echo '<div class="items-slider products-slider '.$slider_type.'-container slider-'.$box_id.'">';
+                      echo '<div class="slider '.$slider_type.'-wrapper">';
+                      $_i=0;
+                        if($block_id && $block_id != '' && et_get_block($block_id) != '') {
+                            echo '<div class=" '.$slider_type.'-slide">';
+                                echo et_get_block($block_id);
+                            echo '</div><!-- slide-item -->';
+                        }
+                          while ($multislides->have_posts()) : $multislides->the_post();
+                              $_i++;
+                              
+                              if(class_exists('Woocommerce')) {
+                                  global $product;
+                                  if (!$product->is_visible()) continue; 
+                                  echo '<div class="slide-item product-slide '.$slider_type.'-slide">';
+                                      woocommerce_get_template_part( 'content', 'product' );
+                                  echo '</div><!-- slide-item -->';
+                              }
 
-                            endwhile; 
-                        echo '</div><!-- slider -->'; 
-                  echo '</div><!-- products-slider -->'; 
-              echo '</div><!-- slider-container -->'; 
-        endif;
-        wp_reset_query();
-        unset($woocommerce_loop['lazy-load']);
-        unset($woocommerce_loop['style']);
-        
-        if(!$slider_type) {
-          echo '
-  
-              <script type="text/javascript">
-                  jQuery(".slider-'.$box_id.' .slider").owlCarousel({
-                      items:4, 
-                      lazyLoad : true,
-                      navigation: true,
-                      navigationText:false,
-                      rewindNav: false,
-                      itemsCustom: '.$items.'
-                  });
-  
-              </script>
-          ';
-        } elseif($slider_type == 'swiper') {
-          echo '
-  
-              <script type="text/javascript">
-                if(jQuery(window).width() > 767) {
-                  jQuery(".slider-'.$box_id.'").etFullWidth();
-            var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
-            keyboardControl: true,
-            centeredSlides: true,
-            calculateHeight : true,
-            slidesPerView: "auto"
-            })
-                } else {
-            var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
-            calculateHeight : true
-            })
-                }
+                          endwhile; 
+                      echo '</div><!-- slider -->'; 
+                echo '</div><!-- products-slider -->'; 
+            echo '</div><!-- slider-container -->'; 
+      endif;
+      wp_reset_query();
+      unset($woocommerce_loop['lazy-load']);
+      unset($woocommerce_loop['style']);
+      
+      if(!$slider_type) {
+        echo '
 
-            jQuery(function($){
-            $(".slider-'.$box_id.' .slide-item").click(function(){
-              mySwiper'.$box_id.'.swipeTo($(this).index());
-              $(".lookbook-index").removeClass("active");
-              $(this).addClass("active");
-            });
-            
-            $(".slider-'.$box_id.' .slide-item a").click(function(e){
-              if($(this).parents(".swiper-slide-active").length < 1) {
-                e.preventDefault();
+            <script type="text/javascript">
+                jQuery(".slider-'.$box_id.' .slider").owlCarousel({
+                    items:4, 
+                    lazyLoad : true,
+                    navigation: true,
+                    navigationText:false,
+                    rewindNav: false,
+                    itemsCustom: '.$items.'
+                });
+
+            </script>
+        ';
+      } elseif($slider_type == 'swiper') {
+        echo '
+
+            <script type="text/javascript">
+              if(jQuery(window).width() > 767) {
+                jQuery(".slider-'.$box_id.'").etFullWidth();
+          var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
+          keyboardControl: true,
+          centeredSlides: true,
+          calculateHeight : true,
+          slidesPerView: "auto"
+          })
+              } else {
+          var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
+          calculateHeight : true
+          })
               }
-            });
-            }, jQuery);
-              </script>
-          ';
-        }
-            
-    }
+
+          jQuery(function($){
+          $(".slider-'.$box_id.' .slide-item").click(function(){
+            mySwiper'.$box_id.'.swipeTo($(this).index());
+            $(".lookbook-index").removeClass("active");
+            $(this).addClass("active");
+          });
+          
+          $(".slider-'.$box_id.' .slide-item a").click(function(e){
+            if($(this).parents(".swiper-slide-active").length < 1) {
+              e.preventDefault();
+            }
+          });
+          }, jQuery);
+            </script>
+        ';
+      }
+          
+  }
 }
 
 //***********************************************************************//

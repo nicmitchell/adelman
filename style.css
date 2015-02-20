@@ -1,0 +1,520 @@
+/*
+Theme Name: Adelman Fine Art
+Theme URI: http://adelmanfineart.com
+Version: 1.0
+Description: Adelman Fine Art
+Template:     legenda
+Version:      1.0.0
+Text Domain:  adelman-fine-art-child
+*/
+
+/* Fix wishlist button color text */
+a.add_to_wishlist.single_add_to_wishlist.button.alt:hover {
+    color: #fff;
+}
+.content a {
+  color: #009ba6;
+  text-decoration: none;
+  outline: none;
+}
+.content a:hover {
+  text-decoration: underline;
+}
+.content h1.post-title a, 
+.content h2.post-title a, 
+.content h3.post-title a, 
+.content h4.post-title a, 
+.content h5.post-title a, 
+.content h6.post-title a { 
+  color: #000; 
+}
+
+.content h1.post-title a:hover, 
+.content h2.post-title a:hover, 
+.content h3.post-title a:hover, 
+.content h4.post-title a:hover, 
+.content h5.post-title a:hover, 
+.content h6.post-title a:hover { 
+  color: #009ba6; 
+  text-decoration: underline;
+}
+
+.product-name a {
+  color: #000;
+  font-family: 'Open Sans';
+}
+
+/* hide wishlist hover on tablet and smaller */
+@media (max-width: 979px){
+  .single-product-page .product-info .single_add_to_wishlist:after{
+    display: none !important;
+  }
+}
+
+/* Blog thumbs */
+body.blog .post-images { border: 1px solid #ddd; }
+body.blog .blog-masonry .post-info { display: none; }
+body.single-post .post-info { display: none; }
+.page-heading h1 { line-height: 1.2; }
+
+/* Hide author meta on blog archive */
+span.posted-by, a.post-comments-count {
+    display: none;
+}
+
+/* Sidebar widget search form */
+#searchform input[type="text"] { margin-right: 0px; }
+
+/* Fix widget title size on Visual Composer sidebars */
+h3.widget-title { font-size: 18px; }
+
+/* Decrease header size on Slider*/
+.slider-container h2.title{ font-size: 24.5px; }
+
+/* Headings on Artist page */
+.single-artist .title .inner-artist p {
+  background: white;
+  padding: 0 20px;
+  z-index: 2;
+  position: relative;
+  display: inline-block;
+  font-size: 24.5px;
+  text-transform: uppercase;
+  color: #000;
+  font-family: Georgia, Arial;
+}
+
+/* Sold icon */
+.single-product-page .product-info .label-icon.out-of-stock, .product-image-wrapper .out-of-stock {
+  color: #db1425;
+  text-transform: uppercase;
+  font-size: 14px;
+  display: block;
+  width: 48px;
+  height: 48px;
+  padding: 13px 0 0 0;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 5px;
+  margin-left: 5px;
+  font-family: Georgia;
+  background-color: rgba(255,255,255,0.5);
+  border: 1px solid #db1425;
+  border-radius: 50%;
+  text-indent: 0;
+}
+
+/* Replace 'Social' with 'Share' on Product page */
+.share-button-title{
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #000000;
+  width: 100%;
+  float: left;
+  padding-bottom: 5px;
+  text-align: left;
+  border-bottom: 1px solid #ebebeb;
+  margin-bottom: 10px;
+}
+.share-title { display:none; }
+
+/* Adjust sold icon on main image */
+.product-info .images span.label-icon.out-of-stock {
+  left: 25px;
+}
+
+/* Hide big red Sold Out badge on single product page */
+.content .row.product-info span.soldout {
+  display: none;
+}
+
+/* Increase Zoom Icon on Single Product Thumb */
+.quick-view-popup .images .main-image-slider ul.slides .zoom-link i, .single-product-page .images .main-image-slider ul.slides .zoom-link i {
+  color: #000;
+  text-shadow: 0px 0px 2px #fff;
+  box-shadow: 0 0 2px #fff, inset 0 0 2px #fff;
+  border: 3px solid;
+  width: 40px;
+  display: inline-block;
+  padding: 10px 15px;
+}
+
+.quick-view-popup .images .main-image-slider ul.slides .zoom-link, .single-product-page .images .main-image-slider ul.slides .zoom-link {
+  font-size: 48px;
+}
+
+.single-product-page .images .main-image-slider ul.slides .zoom-link i:hover {
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 0 2px #000;
+  box-shadow: 0 0 2px #000, inset 0 0 2px #000;
+}
+
+/* Move X to close quick view and modals */
+.mfp-close {
+  top: 0;
+}
+
+/* Pretty Photo for Blog */
+.pp_pic_holder.pp_default {
+  background: #fff; 
+  -webkit-border-radius: 3px; 
+  border-radius: 3px; 
+  box-shadow: 0 1px 30px 0 rgba(0,0,0,.25); 
+  -webkit-box-shadow: 0 1px 30px 0 rgba(0,0,0,.25); 
+  padding: 20px 0;
+}
+
+/* Pretty Photo modal icons for product images */
+.pp_pic_holder.pp_default .pp_close, 
+.pp_pic_holder.pp_default a.pp_contract, 
+.pp_pic_holder.pp_default a.pp_expand {
+  text-shadow: none;
+  top: -0.45em;
+  color: #000 !important;
+  background-color: #fff !important;
+  display: inline !important;
+  font-size: 44px !important;
+  line-height: 1.15em;
+  z-index: 9999;
+}
+
+div.pp_woocommerce .pp_close, 
+div.pp_woocommerce a.pp_contract, 
+div.pp_woocommerce a.pp_expand {
+  text-shadow: none;
+  top: 0.15em;
+  color: #000 !important;
+  background-color: #fff !important;
+  display: inline !important;
+  font-size: 44px !important;
+  line-height: 1.15em;
+  z-index: 9999;
+}
+
+div.pp_woocommerce .pp_close:hover, 
+div.pp_woocommerce a.pp_contract:hover, 
+div.pp_woocommerce a.pp_expand:hover {
+  text-shadow: none;
+  top: 0.15em;
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+/* Show close on Pretty Photo for blog galleries */
+.pp_close:before {
+  font-family: WooCommerce;
+  content: "\e013";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  text-indent: 0;
+}
+
+/* Show expand button for blog galleries */
+a.pp_expand:before {
+  font-family: WooCommerce;
+  content: "\e005";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  text-indent: 0;
+}
+
+/* Expand button shape */
+.pp_content_container a.pp_expand, 
+.pp_content_container a.pp_contract,
+.pp_content_container a.pp_close {
+  border-radius: 100%;
+  height: 1em;
+  width: 1em;
+}
+
+/* make sure expand/contract shows on portrait on iPad */
+@media only screen and (max-width: 768px){
+  .pp_pic_holder.pp_default .pp_arrow_next:before,
+  .pp_pic_holder.pp_default .pp_arrow_previous:before, 
+  .pp_pic_holder.pp_default .pp_close:before,
+  div.pp_woocommerce .pp_arrow_next:before, 
+  div.pp_woocommerce .pp_arrow_previous:before, 
+  div.pp_woocommerce .pp_close:before {
+    font-size: 44px !important;
+    display: inline !important;
+    line-height: 1.15em;
+  }
+}
+
+/* make higher than social icons */
+div.pp_pic_holder {
+  z-index: 1000000;
+}
+
+/* close */
+div.pp_woocommerce .pp_close, div.pp_woocommerce .pp_close:hover {
+  right: 0;
+}
+
+/* modal image border */
+.pp_content_container .pp_content {
+  height: auto !important;
+  border: none;
+}
+
+/* modal image border on Pretty Photo for blog */
+.pp_top, .ppt {
+  display: none !important;
+}
+
+/* resize modal image */
+#fullResImage {
+  max-width: 97vw;
+  height: 100% !important;
+}
+
+div.pp_woocommerce .pp_content_container {
+  max-width: 100vw;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Remove borders on Artists page */
+.post-type-archive-artist .blog-post.post-grid .post-information { 
+  border: none; 
+  padding: 0 0 20px 0; 
+}
+
+.post-type-archive-artist header.artist-header {
+  margin-bottom: 10px;
+}
+
+/* Artists lightbox caption */
+.mfp-title { text-align: center; font-size: 16px; }
+.mfp-title a { color: #f3f3f3; text-decoration: underline; }
+
+/* Fix product thumbnail title length */
+.slide-item .product .product-name, .products-grid .product .product-name {
+  max-width: 180px;
+  font-size: 14px;
+  text-transform: none;
+  /*opacity: 0;*/
+  margin-bottom: 0;
+  min-height: 42px;
+}
+
+/* Reduce spacing between products */
+.products-grid .product, .slide-item.product-slide.grid-slide {
+  margin-bottom: 20px;
+}
+
+/* Hide quick view on tablet and mobile */
+@media max-width: 979px { 
+  .products-grid .product:hover .show-quickly,
+  .slide-item .product:hover .product-image-wrapper .show-quickly,
+  .products-list .product .product-image-wrapper:hover .show-quickly,
+  .products-grid .product:hover .product-image-wrapper .show-quickly,
+  .product-loop .product.content-product-advanced:hover .product-image-wrapper .show-quickly,
+  .slide-item .product.content-product-advanced:hover .product-image-wrapper .show-quickly,
+  .product-loop .product.content-product-advanced .product-image-wrapper:hover .show-quickly,
+  .slide-item .product.content-product-advanced .product-image-wrapper:hover .show-quickly {
+    opacity: 0 !important;
+    display: none !important;
+  }
+}
+
+/* Fix Sorting <select> on Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+.toolbar .woocommerce-ordering{
+    margin-top: 0px;
+  }
+}
+
+/* Fix float of sort grid */
+@media (min-width: 481px) and (max-width: 767px){
+  .toolbar .woocommerce-ordering{
+    /* float: right; */
+    margin-left: 10px;
+  }
+}
+
+/* Small thumbs Artists page */
+.artist-thumbnails {
+  margin-top: 10px; 
+}
+
+figure.artist-thumbnail {
+  width: 85px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+figure.artist-thumbnail:last-child {
+  margin-right: 0;
+  float: left;
+}
+.post-type-archive-artist .blog-post.post-grid .post-information .post-info { margin-bottom: 10px; }
+
+/* Single product thumbnails */
+.single-product .thumbnails .flex-viewport { /*overflow: visible !important; */ width: 1200px;}
+.single-product .thumbnails { margin-left: 0; }
+.single-product .thumbnails .product-thumbnails-slider { margin-left: 0; width: auto; }
+
+/* Single product meta */
+.quick-view-popup .product-info .artist_name_wrapper,
+.single-product-page .product-info .artist_name_wrapper,
+.single-product-page .product-info .short_description_meta {
+  display: block;
+  clear: both;
+  color: #000;
+  margin-bottom: 10px;
+}
+.quick-view-popup .product-info .artist_name_wrapper span,
+.single-product-page .product-info .artist_name_wrapper span, 
+.single-product-page .product-info .short_description_meta span {
+  color: #6f6f6f !important;
+}
+
+/* Submenu height */
+.fixed-header .menu > li .nav-sublist-dropdown .container > ul > li a, .main-nav .menu > li .nav-sublist-dropdown .container > ul > li a { padding: 5px 20px !important; }
+
+/* Navigation Font */
+.fixed-header .menu > li > a, .main-nav .menu > li > a {
+  font-family: 'Open Sans';
+}
+
+/* Art category widget */
+.gallery-filter-top li {
+  display: inline;
+  clear: none !important;
+  float: left;
+}
+.gallery-filter-top h3 {
+  font-size: 12px;
+  /*float: left;*/
+  /*margin-bottom: 0px;*/
+  padding-top: 4px;
+}
+.gallery-filter-top .widget-container {
+  /*display: inline;*/
+  /*margin-bottom: 0px;*/
+  height: auto;
+}
+.widget-container.woocommerce select {
+    margin-right: 5px;
+}
+.widget-container.woocommerce.widget_layered_nav {
+  float: left;
+}
+.widget_layered_nav ul li a:before { 
+  display: none; 
+}
+.widget_layered_nav ul {
+  width: auto;
+  margin-left: 10px;
+}
+
+small.count { 
+  display: none !important; 
+}
+.widget_layered_nav ul li a { 
+  padding-left: 0px; 
+}
+.widget_layered_nav ul li.chosen { 
+  padding-left: 0px; 
+}
+.toolbar .woocommerce-ordering {
+  /*float: right;*/
+}
+.toolbar-bottom .woocommerce-ordering {
+  display: none;
+}
+.toolbar-top select {
+  border: none;
+  padding-top: 7px;
+  font-family: 'Open Sans', Arial;
+  border: 1px solid #ebebeb;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  line-height: 15px;
+  font-size: 12px;
+  width: 170px;
+  margin-bottom: 0;
+}
+
+.toolbar-top nav.woocommerce-pagination, .toolbar-top .view-switcher, .toolbar-top .woocommerce-result-count {
+  display: none;
+}
+.toolbar.toolbar-top { margin-top: 0px !important; }
+
+/* Product Finder */
+#wc_product_finder select#relation {
+  width: 60px;
+}
+
+/* Artists Page */
+figure.artist-thumbnail {
+  max-width: 22.95%;
+}
+
+@media (max-width: 1199px) {
+  figure.artist-thumbnail {
+    max-width: 22.5%;
+  }
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+  figure.artist-thumbnail {
+    max-width: 21.7%;
+  }
+  .post-title a {
+    font-size: 1rem !important;
+  }
+  span.posted-on, span.product-link {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  figure.artist-thumbnail {
+    max-width: 23.5%;
+    width: 100%;
+  }
+  .artist-thumbnails {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 538px) {
+  figure.artist-thumbnail {
+    max-width: 23.49%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 538px) {
+  figure.artist-thumbnail {
+    max-width: 23.3%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 479px) {
+  figure.artist-thumbnail {
+    max-width: 22.85%;
+  }
+}

@@ -1,0 +1,31 @@
+/*---------- ADMIN ---------------*/
+/*.pmxi_plugin .options_group .input {
+  padding-left: 150px;
+  margin-top: 10px;
+  clear: both;
+}
+
+.pmxi_plugin .options_group .input label {
+  padding-left: 160px !important;
+}*/
+
+/* Fix WooCommerce import fields */
+/*.all-import_page_pmxi-admin-import .woocommerce_options_panel label, .all-import_page_pmxi-admin-import .woocommerce_options_panel legend { margin: 0 !important; }
+
+.all-import_page_pmxi-admin-import .woocommerce_options_panel fieldset.form-field, .all-import_page_pmxi-admin-import .woocommerce_options_panel p.form-field { padding: 5px 20px 5px 15px!important; }
+*/
+/* Visual Composer */
+.vc_navbar-header { display: none; }
+
+/* Re-order CPTs notice */ 
+div#cpt_info_box { display: none; }
+
+/* Hide big red Sold Out badge */
+span.soldout {
+    display: none;
+}
+
+/* Hack to fix Product admin columns from WP SEO */
+table.wp-list-table .column-name{
+  width: auto !important;
+}

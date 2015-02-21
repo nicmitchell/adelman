@@ -104,7 +104,7 @@ add_action('init', 'cptui_register_my_cpt_artist');
         'rewrite' => array('slug' => 'artist', 'with_front' => true),
         'query_var' => true,
         'has_archive' => true,
-        'supports' => array('title','editor','thumbnail','comments'),
+        'supports' => array('title','editor','thumbnail'),
         'taxonomies' => array('artists'),
         'labels' => array (
           'name' => 'Artists',

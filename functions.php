@@ -104,7 +104,7 @@ add_action('init', 'cptui_register_my_cpt_artist');
         'rewrite' => array('slug' => 'artist', 'with_front' => true),
         'query_var' => true,
         'has_archive' => true,
-        'supports' => array('title','editor','excerpt','thumbnail','comments'),
+        'supports' => array('title','editor','thumbnail','comments'),
         'taxonomies' => array('artists'),
         'labels' => array (
           'name' => 'Artists',
@@ -139,7 +139,7 @@ add_action('init', 'cptui_register_my_cpt_jeweler');
       'hierarchical' => false,
       'rewrite' => array('slug' => 'jeweler', 'with_front' => true),
       'query_var' => true,
-      'supports' => array('title','editor','excerpt','trackbacks','custom-fields','comments','revisions','thumbnail','author','page-attributes','post-formats'),
+      'supports' => array('title','editor','thumbnail'),
       'labels' => array (
         'name' => 'Jewelers',
         'singular_name' => 'Jeweler',

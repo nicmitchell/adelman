@@ -19,7 +19,7 @@ jQuery(document).ready(function($){
 				return;
 			}
 			
-			data = 's='+$(this).val() + '&products=' + et_search.data('products') + '&count=' + et_search.data('count') + '&images=' + et_search.data('images') + '&posts=' + et_search.data('posts') + '&portfolio=' + et_search.data('portfolio') + '&pages=' + et_search.data('pages') + '&action=et_get_search_result';
+			data = 's='+$(this).val() + '&products=' + et_search.data('products') + '&count=' + et_search.data('count') + '&images=' + et_search.data('images') + '&posts=' + et_search.data('posts') + '&jewelers=' + et_search.data('jeweler') + '&artists=' + et_search.data('artist') +  '&pages=' + et_search.data('pages') + '&action=et_get_search_result';
 			
 			et_search.addClass('loading');
         	resultArea.html('');

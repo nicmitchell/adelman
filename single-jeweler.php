@@ -31,9 +31,9 @@
 					$title = get_the_title();
 
 					// UNO de 50
-					if(strtolower($title) === "uno de 50"):
+					if(strtolower($title) === "unode50"):
 						$rings = array( 'image' => '', 'link' => '');
-						$earrings = array( 'image' => '', 'link' => '');
+						$earrings = array( 'image' => 'http://d55.067.myftpupload.com/wp-content/uploads/2015/02/UNO_PEN0399VRDMTL0U_ISpyWithMyLittleEye.jpg', 'link' => '../product/i-spy-with-my-little-eye-2/');
 						$necklaces = array( 'image' => '', 'link' => '');
 						$bracelets = array( 'image' => 'http://e09.478.myftpupload.com/wp-content/uploads/2015/02/Journey-Bracelet-in-metal-mix-characteristic-of-Uno-de-50-coated-in-15micro-silver-150x150.jpg', 'link' => 'http://bing.com');
 						$cuffs = array( 'image' => '', 'link' => '');
@@ -42,7 +42,7 @@
 
 					// Melinda Maria
 					if(strtolower($title) === "melinda maria"):
-						$rings = array( 'image' => '', 'link' => '');
+						$rings = array( 'image' => 'http://d55.067.myftpupload.com/wp-content/uploads/2015/02/MM_R5022GWT7_MonroeRing.jpg', 'link' => '');
 						$earrings = array( 'image' => '', 'link' => '');
 						$necklaces = array( 'image' => '', 'link' => '');
 						$bracelets = array( 'image' => '', 'link' => '');

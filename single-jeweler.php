@@ -29,8 +29,8 @@
 					<?php 
 				
 					$all_jewelry = array(
-						'womens' => [],//array('gender' => $womens_id),
-						'mens' => [],//array('gender' => $mens_id)
+						'womens' => ['image_count' => 0],
+						'mens' => ['image_count' => 0]
 					);
 
 					// Get/set attribute IDs for women / men jewelry
@@ -82,10 +82,13 @@
 						if ($jewelry['id']) $jewelry['link'] .= '?filtering=1&filter_jewelry-type='. $jewelry['id'];
 
 						// Split the jewelry_attrs array based on gender
-						if($gender === 'womens'):
+						// Only add it if there is an image present
+						if($gender === 'womens' && $jewelry['image']):
 							$all_jewelry['womens'][$category_slug] = $jewelry;
-						elseif($gender === 'mens'):
+							$all_jewelry['womens']['image_count']++;
+						elseif($gender === 'mens' && $jewelry['image']):
 							$all_jewelry['mens'][$category_slug] = $jewelry;
+							$all_jewelry['mens']['image_count']++;
 						endif;
 
 					// End of looping through ACF fields
@@ -96,39 +99,48 @@
 					<div class="page-content sidebar-position-without">
 					  <div class="row">
 					    <div class="content span12">
-					      <div class="slider-container  posts-count-gt1">
-					        <h2 class="title"><span>Women's Jewlery</span></h2>
-					        <div class="items-slider products-slider grid-container slider-9853">
-					          <div class="slider grid-wrapper">
 
-											<?php foreach($all_jewelry['womens'] as $type => $jewelry): ?>
-												<?php if ($jewelry['image']): ?>
+					    	<?php foreach($all_jewelry as $gender => $values): ?>
+					    		<?php if($values['image_count'] > 0): ?>
 
-							            <div class="slide-item product-slide grid-slide">
-							              <div class="post-1234 product type-product status-publish has-post-thumbnail first sold-individually taxable shipping-taxable purchasable product-type-simple product-cat-paintings instock">
-							                <div class="product-image-wrapper hover-effect-swap">
-							                	<a href="<?php echo $jewelry['link']; ?>">
-							                		<img src="<?php echo $jewelry['image']; ?>" style="width: 200px;">
-							                	</a>
-							                </div>
-							                <h3 class="product-name"><a href="<?php echo $jewelry['link']; ?>"><?php echo ucwords($type); ?></a></h3>
-							                <div class="product-excerpt">
-							                </div>
-							                <div class="add-to-container">
-							                </div>
-							                <div class="clear"></div>
-							              </div>
-							            </div>
+							      <div class="slider-container  posts-count-gt1">
+							        <h2 class="title"><span><?php echo ucwords($gender); ?>'s Jewlery</span></h2>
+							        <div class="items-slider products-slider grid-container slider-9853">
+							          <div class="slider grid-wrapper">
 
-							          <?php endif; ?>
-						          <?php endforeach; ?>
-					            <!-- slide-item -->
-					          </div>
-					          <!-- slider -->
-					        </div>
-					        <!-- products-slider -->
-					      </div>
-					      <!-- slider-container -->
+													<?php foreach($values as $type => $jewelry): ?>
+														<?php if ($jewelry['image']): ?>
+
+									            <div class="slide-item product-slide grid-slide">
+									              <div class="post-1234 product type-product status-publish has-post-thumbnail first sold-individually taxable shipping-taxable purchasable product-type-simple product-cat-paintings instock">
+								                	<a href="<?php echo $jewelry['link']; ?>">
+										                <div class="product-image-wrapper hover-effect-swap">
+									                		<img src="<?php echo $jewelry['image']; ?>" style="width: 200px;">
+										                </div>
+									                <h3 class="product-name">
+									                
+									                <?php //echo ucwords($type); ?></a>
+								                	</h3>
+									     <!--            <div class="product-excerpt">
+									                </div>
+									                <div class="add-to-container">
+									                </div> -->
+								                	</a>
+									                <div class="clear"></div>
+									              </div>
+									            </div>
+
+									          <?php endif; ?>
+								          <?php endforeach; ?>
+							            <!-- slide-item -->
+							          </div>
+							          <!-- slider -->
+							        </div>
+							        <!-- products-slider -->
+							      </div>
+							    <?php endif; ?>
+						      <!-- slider-container -->
+					      <?php endforeach; ?>
 					      <div class="clear"></div>
 					    </div>
 					  </div>

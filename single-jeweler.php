@@ -117,15 +117,10 @@
 										                <div class="product-image-wrapper hover-effect-swap">
 									                		<img src="<?php echo $jewelry['image']; ?>" style="width: 200px;">
 										                </div>
-									                <h3 class="product-name">
-									                
-									                <?php //echo ucwords($type); ?></a>
-								                	</h3>
-									     <!--            <div class="product-excerpt">
-									                </div>
-									                <div class="add-to-container">
-									                </div> -->
-								                	</a>
+										                </a>
+										                <h3 class="product-name">
+											                <a href="<?php echo $jewelry['link']; ?>"><?php echo ucwords($type); ?></a>
+									                	</h3>
 									                <div class="clear"></div>
 									              </div>
 									            </div>

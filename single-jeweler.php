@@ -28,93 +28,90 @@
 
 					<?php 
 				
-					$title = get_the_title();
-
-					// UNO de 50
-					if(strtolower($title) === "unode50"):
-						$rings = array( 'image' => '', 'link' => '');
-						$earrings = array( 'image' => 'http://d55.067.myftpupload.com/wp-content/uploads/2015/02/UNO_PEN0399VRDMTL0U_ISpyWithMyLittleEye.jpg', 'link' => '../product/i-spy-with-my-little-eye-2/');
-						$necklaces = array( 'image' => '', 'link' => '');
-						$bracelets = array( 'image' => 'http://e09.478.myftpupload.com/wp-content/uploads/2015/02/Journey-Bracelet-in-metal-mix-characteristic-of-Uno-de-50-coated-in-15micro-silver-150x150.jpg', 'link' => 'http://bing.com');
-						$cuffs = array( 'image' => '', 'link' => '');
-						$bangles = array( 'image' => '', 'link' => '');
-					endif;
-
-					// Melinda Maria
-					if(strtolower($title) === "melinda maria"):
-						$rings = array( 'image' => 'http://d55.067.myftpupload.com/wp-content/uploads/2015/02/MM_R5022GWT7_MonroeRing.jpg', 'link' => '');
-						$earrings = array( 'image' => '', 'link' => '');
-						$necklaces = array( 'image' => '', 'link' => '');
-						$bracelets = array( 'image' => '', 'link' => '');
-						$cuffs = array( 'image' => '', 'link' => '');
-						$bangles = array( 'image' => '', 'link' => '');
-					endif;
-
-
-					$womens = array(
-						'rings' => array(
-							'title' => 'Rings',
-							'image' => $rings['image'],
-							'link' => $rings['link']
-						),
-						'earrings' => array(
-							'title' => 'Earrings',
-							'image' => $earrings['image'],
-							'link' => $earrings['link']
-						),
-						'necklaces' => array(
-							'title' => 'Necklaces',
-							'image' => $necklaces['image'],
-							'link' => $necklaces['link']
-						),
-						'bracelets' => array(
-							'title' => 'Bracelets',
-							'image' => $bracelets['image'],
-							'link' => $bracelets['link']
-						),
-						'cuffs' => array(
-							'title' => 'Cuffs',
-							'image' => $cuffs['image'],
-							'link' => $cuffs['link']
-						),
-						'bangles' => array(
-							'title' => 'Bangles',
-							'image' => $bangles['image'],
-							'link' => $bangles['link']
-						),
+					$all_jewelry = array(
+						'womens' => [],//array('gender' => $womens_id),
+						'mens' => [],//array('gender' => $mens_id)
 					);
 
-					// $mens = array(
-					// 	'bracelets' => array(
-					// 		'title' => 'Bracelets',
-					// 		'image' => '',
-					// 		'link' => ''
-					// 	),
-					// 	'rings' => array(
-					// 		'title' => 'Rings',
-					// 		'image' => '',
-					// 		'link' => ''
-					// 	)
-					// );
+					// Get/set attribute IDs for women / men jewelry
+					$gender_terms = get_terms("pa_gender");
+					$womens_id = 0;
+					$mens_id = 0;
 
+					foreach ( $gender_terms as $term ):
+						$gender = $term->slug;
+						if (preg_match('/women/', $gender)):
+							$womens_id = $term->term_id;
+						elseif (preg_match('/men/', $gender)):
+							$mens_id = $term->term_id;
+						endif;
+					endforeach;
+
+					// Get attribute IDs for jewelry-type attribute
+					$jewelry_type_terms = get_terms("pa_jewelry-type");
+
+					// Make sure we are only showing the right Jeweler
+					$brand = basename(get_permalink());
+
+					// Get the ACF fields for the category images
+					$fields = get_fields();
+					foreach ($fields as $field_name => $field):
+						$category = explode('_', $field_name);
+						$gender = $category[1];
+						$gender_id = ($gender === 'womens') ? $womens_id : $mens_id;
+						$category_slug = $category[0];
+						$term_id;
+						
+						// Get the category attibute id based on the slug
+						foreach ( $jewelry_type_terms as $term ):
+							if ($term->slug === $category_slug):
+								$term_id = $term->term_id;
+								break;
+							endif;
+						endforeach; 
+
+						$jewelry = array(
+							'id' => (isset($term_id)) ? $term_id : NULL,
+							'gender_id' => $gender_id,
+							'category' => $category_slug,
+							'image' => $field['sizes']['medium'],
+							'link' => get_site_url(). '/brand/'. $brand
+						);
+
+						if ($jewelry['gender_id']) $jewelry['link'] .= '?filtering=1&filter_gender='. $jewelry['gender_id'];
+						if ($jewelry['id']) $jewelry['link'] .= '?filtering=1&filter_jewelry-type='. $jewelry['id'];
+
+						// Split the jewelry_attrs array based on gender
+						if($gender === 'womens'):
+							$all_jewelry['womens'][$category_slug] = $jewelry;
+						elseif($gender === 'mens'):
+							$all_jewelry['mens'][$category_slug] = $jewelry;
+						endif;
+
+					// End of looping through ACF fields
+					endforeach;
+					
 					?>
-					<?php foreach ($womens as $type => $jewlery): ?>
-						<?php if ($jewlery['image'] && $jewlery['link']): ?>
-							<div class="page-content sidebar-position-without">
-							  <div class="row">
-							    <div class="content span12">
-							      <div class="slider-container  posts-count-gt1">
-							        <h2 class="title"><span>Women's Jewlery</span></h2>
-							        <div class="items-slider products-slider grid-container slider-9853">
-							          <div class="slider grid-wrapper">
+
+					<div class="page-content sidebar-position-without">
+					  <div class="row">
+					    <div class="content span12">
+					      <div class="slider-container  posts-count-gt1">
+					        <h2 class="title"><span>Women's Jewlery</span></h2>
+					        <div class="items-slider products-slider grid-container slider-9853">
+					          <div class="slider grid-wrapper">
+
+											<?php foreach($all_jewelry['womens'] as $type => $jewelry): ?>
+												<?php if ($jewelry['image']): ?>
+
 							            <div class="slide-item product-slide grid-slide">
 							              <div class="post-1234 product type-product status-publish has-post-thumbnail first sold-individually taxable shipping-taxable purchasable product-type-simple product-cat-paintings instock">
 							                <div class="product-image-wrapper hover-effect-swap">
-							                  <a href="<?php echo $jewlery['link']; ?>" class="product-content-image" data-images-list="<?php echo $jewlery['image']; ?>">
-							                  <img src="<?php echo $jewlery['image']; ?>" class=" hide-image">
-							                  </a>
+							                	<a href="<?php echo $jewelry['link']; ?>">
+							                		<img src="<?php echo $jewelry['image']; ?>" style="width: 200px;">
+							                	</a>
 							                </div>
-							                <h3 class="product-name"><a href="<?php echo $jewlery['link']; ?>"><?php echo $jewlery['title']; ?></a></h3>
+							                <h3 class="product-name"><a href="<?php echo $jewelry['link']; ?>"><?php echo ucwords($type); ?></a></h3>
 							                <div class="product-excerpt">
 							                </div>
 							                <div class="add-to-container">
@@ -122,19 +119,20 @@
 							                <div class="clear"></div>
 							              </div>
 							            </div>
-							            <!-- slide-item -->
-							          </div>
-							          <!-- slider -->
-							        </div>
-							        <!-- products-slider -->
-							      </div>
-							      <!-- slider-container -->
-							      <div class="clear"></div>
-							    </div>
-							  </div>
-							</div>
-						<?php endif; ?>
-					<? endforeach; ?>
+
+							          <?php endif; ?>
+						          <?php endforeach; ?>
+					            <!-- slide-item -->
+					          </div>
+					          <!-- slider -->
+					        </div>
+					        <!-- products-slider -->
+					      </div>
+					      <!-- slider-container -->
+					      <div class="clear"></div>
+					    </div>
+					  </div>
+					</div>
 
 		      <div class="portfolio-single-item">
 		      	<h3 class="title"><span>About the Jeweler</span></h3>

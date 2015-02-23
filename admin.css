@@ -29,3 +29,9 @@ span.soldout {
 table.wp-list-table .column-name{
   width: auto !important;
 }
+
+/* Hide upload/size guide on Product Additional Options */
+.format-settings:nth-of-type(4), 
+.format-settings:nth-of-type(5) {
+    display: none;
+}

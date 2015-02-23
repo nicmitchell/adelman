@@ -168,7 +168,8 @@ function adelman_product_artist() {
   $providers = get_field('provider'); ?>
   <?php if( $providers ): ?>
     <?php foreach( $providers as $provider ): ?>
-      Artist: <a href="<?php echo get_permalink( $provider->ID ); ?>">
+      <?php $provider_type = get_post_type( $provider->ID ); ?>
+      <?php echo ucwords($provider_type); ?>: <a href="<?php echo get_permalink( $provider->ID ); ?>">
       <?php echo get_the_title( $provider->ID ); ?>
       </a>
     <?php endforeach; ?>

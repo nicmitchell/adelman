@@ -52,3 +52,12 @@ table.wp-list-table .column-name{
 .format-settings:nth-of-type(7) label.label:after {
     content: ' (example: "Backstory Text")';
 }
+
+/* Hide extra Edit Product options */
+span.duplicate {
+    display: none;
+}
+
+span.edit_as_new_draft {
+    display: none;
+}

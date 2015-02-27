@@ -32,19 +32,16 @@
       <?php endif; ?>
 
       <div class="content <?php echo $content_span; ?>">
-          <?php //if ($blog_layout == 'grid'): ?>
-            <div class="blog-masonry row">
-          <?php //endif ?>
+        <div class="blog-masonry row">
 
-            <?php if(have_posts()): while(have_posts()) : the_post(); ?>
+          <?php if(have_posts()): while(have_posts()) : the_post(); ?>
 
-                <?php get_template_part('content', 'artists'); ?>
+              <?php get_template_part('content', 'artists'); ?>
 
-            <?php endwhile; ?>
+          <?php endwhile; ?>
 
-          <?php //if ($blog_layout == 'grid'): ?>
-            </div>
-          <?php //endif ?>
+        </div>
+
 
         <?php else: ?>
 

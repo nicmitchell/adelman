@@ -12,7 +12,7 @@
 	$width = 500;//etheme_get_option('blog_page_image_width');
 	$height = 500;//etheme_get_option('blog_page_image_height');
 	$crop = etheme_get_option('blog_page_image_cropping');
-	$product = (get_field('linked_product')) ? array_shift(get_field('linked_product')) : false;
+	$product = (get_post_meta($postId, 'linked_product')) ? array_shift(get_post_meta($postId, 'linked_product'))[0] : false;
 	$args = apply_filters('woocommerce_related_products_args', array(
 		'relation' => 'AND',
 		'post_type'				=> 'product',
@@ -24,8 +24,8 @@
 		'post_status'      => 'publish',
 		'meta_query' => array(
 			array(
-				'key' => 'provider', // name of custom field
-				'value' => '"' . $postId . '"', // matches exaclty "123", not just 123. This prevents a match for "1234"
+				'key' => 'provider',
+				'value' => '"' . $postId . '"', 
 				'compare' => 'LIKE'
 			)
 		)
@@ -38,7 +38,7 @@
 	<header class="artist-header">
 		<h4 class="post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
 		<span class="posted-on">Artwork shown: </span>
-		<span class="product-link"><a href="<?php echo get_permalink($product->ID); ?>"><?php echo $product->post_title; ?></a></span>
+		<span class="product-link"><a href="<?php echo get_permalink($product); ?>"><?php echo get_the_title($product); ?></a></span>
 	</header>
 
 	<?php $image = etheme_get_image(false, $width,$height,$crop); ?>
@@ -73,7 +73,7 @@
 			</div>
 		</div>
 
-		<div class="post-description"><?php //the_content('<span class="button center read-more">'.__('Read More', ETHEME_DOMAIN).'</span>'); ?></div>
+		<div class="post-description"></div>
 
 		<div class="clear"></div>
 		

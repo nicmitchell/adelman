@@ -42,20 +42,20 @@
 						'ignore_sticky_posts'	=> 1,
 						'no_found_rows' 		=> 1,
 						'posts_per_page' 	    => 30,
-						// 'orderby' 				=> 'title',
-						// 'order'						=> 'ASC',
-						//'post__in' 				=> $related,
 						'post__not_in'			=> array($product->id),
 						'post_status'      => 'publish',
+						'tax_query' => array(
+							// 'relation' =>  'OR',
+							 array(
+						    'taxonomy' => 'pa_version-short',
+						    'field' => 'slug',
+						    'terms' => array('Original Artwork', 'Original Artwork on Paper')
+							)
+            ),
 						'meta_query' => array(
 							array(
 								'key' => 'provider', // name of custom field
 								'value' => '"' . get_the_ID() . '"', // matches exactly "123", not just 123. This prevents a match for "1234"
-								'compare' => 'LIKE'
-							),
-							array(
-								'key' => 'edition',
-								'value' => 'Original',
 								'compare' => 'LIKE'
 							)
 						)
@@ -91,21 +91,21 @@
 						'ignore_sticky_posts'	=> 1,
 						'no_found_rows' 		=> 1,
 						'posts_per_page' 	    => 30,
-						// 'orderby' 				=> 'title',
-						// 'order'						=> 'ASC',
-						//'orderby' 				=> $orderby,
-						//'post__in' 				=> $related,
-						//'post__not_in'			=> array($product->id),
+						'post__not_in'			=> array($product->id),
+						'tax_query' => array(
+							// 'relation' =>  'OR',
+							 array(
+						    'taxonomy' => 'pa_version-short',
+						    'field' => 'slug',
+						    'terms' => array('Original Artwork', 'Original Artwork on Paper'),
+						    'operator' => 'NOT IN',
+							)
+            ),
 						'meta_query' => array(
 							array(
 								'key' => 'provider', // name of custom field
 								'value' => '"' . get_the_ID() . '"',
 								'compare' => 'LIKE'
-							),
-							array(
-								'key' => 'edition',
-								'value' => 'Original',
-								'compare' => 'NOT LIKE'
 							)
 						)
 					));

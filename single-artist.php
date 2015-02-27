@@ -29,7 +29,7 @@
 					<?php 
 
 					/*
-					*  Query Products for a pa_version => original attribute.
+					*  Query Products for a pa_version-short => original-like attributes.
 					*  This method uses the meta_query LIKE to match the string "123" to the database value a:1:{i:0;s:3:"123";} (serialized array)
 					*/
 				
@@ -61,29 +61,16 @@
 						)
 					));
 
-					$slider_args = array(
-						//'title' =>__('Original Works', ETHEME_DOMAIN),
-						'title' => 'Original Works',
-						'shop_link' => false,
-						'slider_type' => 'grid',
-						'items' => '[[0, 1], [479,2], [619,2], [768,4], [1200, 6], [1600, 6]]',
-						'style' => 'default',
-						'block_id' => false
-					);
+					$the_query = new WP_Query( $args );
+					if(isset($the_query->posts) && !empty($the_query->posts)){
+						echo '<span style="display: none;" id="limited">';
+						foreach( $the_query->posts as $post) {
+							echo $post->ID . ',';
+						}
+						echo '</span>';
+					}
 
-					etheme_create_slider($args, $slider_args);
-
-					wp_reset_postdata(); ?>
-
-					<?php 
-
-					/*
-					*  Query Products for a anything that is not an original edition
-					*  This method uses the meta_query LIKE to match the string "123" to the database value a:1:{i:0;s:3:"123";} (serialized array)
-					*/
-				
-					global $product, $woocommerce_loop;
-					$title = get_the_title();
+					wp_reset_postdata(); 
 
 					$args = apply_filters('woocommerce_related_products_args', array(
 						'relation' => 'AND',
@@ -110,19 +97,65 @@
 						)
 					));
 
-					$slider_args = array(
-						'title' => 'Limited Editions',
-						'shop_link' => false,
-						'slider_type' => 'grid',
-						'items' => '[[0, 1], [479,2], [619,2], [768,4], [1200, 6], [1600, 6]]',
-						'style' => 'default',
-						'block_id' => false
-					);
-
-					etheme_create_slider($args, $slider_args);
+					$the_query = new WP_Query( $args );
+					if(isset($the_query->posts) && !empty($the_query->posts)){
+						echo '<span style="display: none;" id="original">';
+						foreach( $the_query->posts as $post) {
+							echo $post->ID . ',';
+						}
+						echo '</span>';
+					}
 
 					wp_reset_postdata(); ?>
 
+					<?php
+
+						$args = apply_filters('woocommerce_related_products_args', array(
+							'relation' => 'AND',
+							'post_type'				=> 'product',
+							'ignore_sticky_posts'	=> 1,
+							'no_found_rows' 		=> 1,
+							'posts_per_page' 	    => 30,
+							'post__not_in'			=> array($product->id),
+							'meta_query' => array(
+								array(
+									'key' => 'provider', // name of custom field
+									'value' => '"' . get_the_ID() . '"',
+									'compare' => 'LIKE'
+								)
+							)
+						));
+
+						$slider_args = array(
+							'title' => 'Artist Work',
+							'shop_link' => false,
+							'slider_type' => 'grid',
+							'items' => '[[0, 1], [479,2], [619,2], [768,4], [1200, 6], [1600, 6]]',
+							'style' => 'default',
+							'block_id' => false
+						);
+
+						etheme_create_slider($args, $slider_args);
+
+						wp_reset_postdata();
+
+					?>
+					
+					<script>
+					jQuery('document').ready(function(){
+						var select = '<select id="filter" style="margin: 0px 0 25px 15px;""><option>All</option><option value="original">Original</option><option value="limited">Limited Edition</option></select>';
+						jQuery('.items-slider').before(select);
+
+						jQuery('#filter').on('change', function () {
+							jQuery("div[class*='post-']").show(); // show any hidden products
+							var selected = jQuery(this).val();
+							var hidden = jQuery('span#' + selected).text().split(',').slice(0,-1);
+							for(var i = 0; i < hidden.length; i++){
+								jQuery('.post-' + hidden[i]).hide();
+							}
+						});
+					});
+					</script>
 		      <div class="portfolio-single-item">
 			      <h3 class="title"><span>About the Artist</span></h3>
 						<?php the_content(); ?>

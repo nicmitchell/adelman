@@ -44,7 +44,7 @@
 	<?php $image = etheme_get_image(false, $width,$height,$crop); ?>
 
 	<?php if (has_post_thumbnail()): ?>
-		<div class="post-images">
+		<div class="post-images main-image">
 			<a href="<?php the_permalink(); ?>"><img src="<?php echo $image; ?>"></a>
 			<div class="blog-mask">
 				<div class="mask-content">
@@ -57,7 +57,7 @@
 	<div class="post-information <?php if (!has_post_thumbnail()): ?>border-top<?php endif ?>">
 		
 		<div class="post-info">
-			<div class="artist-thumbnails post-images">
+			<div class="artist-thumbnails">
 				<?php foreach ( $products as $product ) : ?>
 					<figure class="artist-thumbnail">
 						<a href="<?php echo get_permalink($product->ID); ?>">

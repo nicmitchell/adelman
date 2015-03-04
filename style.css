@@ -305,6 +305,62 @@ html {
 .mfp-title { text-align: center; font-size: 16px; }
 .mfp-title a { color: #f3f3f3; text-decoration: underline; }
 
+/* Fix Artists page scramble bug */
+@media (min-width: 1200px){
+  .post-type-archive-artist article:nth-child(3) {
+    transform: translate3d(800px, 0px,0px) !important;
+  }
+  .post-type-archive-artist article.isotope-item:nth-child(2) {
+    transform: translate3d(400px, 0px,0px) !important;
+  }
+  .post-type-archive-artist article .main-image img {
+    height: 370px;
+  }
+  .post-type-archive-artist article {
+    height: 554px;
+  }
+}
+
+@media (min-width: 980px) and (max-width: 1199px){
+  .post-type-archive-artist article:nth-child(3) {
+    transform: translate3d(640px, 0px,0px) !important;
+  }
+  .post-type-archive-artist article.isotope-item:nth-child(2) {
+    transform: translate3d(320px, 0px,0px) !important;
+  }
+  .post-type-archive-artist article .main-image img {
+    height: 300px;
+  }
+  .post-type-archive-artist article {
+    height: 554px;
+  }
+  .post-type-archive-artist article {
+    height: 467px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 979px){
+  .post-type-archive-artist article:nth-child(3) {
+    transform: translate3d(496px, 0px,0px) !important;
+  }
+  .post-type-archive-artist article.isotope-item:nth-child(2) {
+    transform: translate3d(248px, 0px,0px) !important;
+  }
+  .post-type-archive-artist article .main-image img {
+    height: 228px;
+  }
+  .post-type-archive-artist article {
+    height: 392px;
+  }
+}
+/*
+.isotope-item .main-image img {
+    width: 377px;
+    height: 377px;
+    max-width: 370px;
+    max-height: 370px;
+}*/
+
 /* Fix product thumbnail title length */
 .slide-item .product .product-name, .products-grid .product .product-name {
   max-width: 180px;

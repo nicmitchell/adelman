@@ -184,7 +184,7 @@
 
 						<?php if (class_exists('YITH_WCWL') && etheme_get_option('wishlist_link')): $wl = new YITH_WCWL(array());?>
 							<div class="fl-r wishlist-link">
-								<a href="<?php echo $wl->get_wishlist_url(); ?>"><i class="icon-heart-empty"></i><span><?php _e('Wishlist', ETHEME_DOMAIN) ?></span></a>
+								<a href="<?php echo $wl->get_wishlist_url(); ?>"><i class="icon-heart-empty"></i><span><?php _e('Favorites', ETHEME_DOMAIN) ?></span></a>
 							</div>
 						<?php endif ?>
 						<?php if(etheme_get_option('right_panel')): ?>

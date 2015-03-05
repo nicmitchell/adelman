@@ -37,8 +37,8 @@
 <article <?php post_class($postClass); ?> id="post-<?php the_ID(); ?>" >
 	<header class="artist-header">
 		<h4 class="post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-		<span class="posted-on">Artwork shown: </span>
-		<span class="product-link"><a href="<?php echo get_permalink($product); ?>"><?php echo get_the_title($product); ?></a></span>
+		<!-- <span class="posted-on">Artwork shown: </span> -->
+		<span class="product-link" style="display:none"><a href="<?php echo get_permalink($product); ?>"><?php echo get_the_title($product); ?></a></span>
 	</header>
 
 	<?php $image = etheme_get_image(false, $width,$height,$crop); ?>

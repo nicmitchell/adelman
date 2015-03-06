@@ -106,9 +106,16 @@
 <div class="container">
 	<div class="page-content contact-page-<?php echo $contact_page; ?>">
 		<?php if ($contact_page == 'default' && $googleMap): ?>
-			<div id="map" class="google-map googlemap-wide">
+			<iframe 
+				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3356.5401152159698!2d-117.16999500000003!3d32.724846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954b25b0d8177%3A0xb3f04d5739e83d7!2sAdelman+Fine+Art!5e0!3m2!1sen!2sus!4v1425611865794" 
+				width="1170" 
+				height="300" 
+				frameborder="0" 
+				style="border:0">
+			</iframe>
+			<!-- <div id="map" class="google-map googlemap-wide">
 			    <p>Enable your JavaScript!</p>
-			</div>	
+			</div>	 -->
 		<?php endif ?>
 		<div class="row-fluid">
 			<?php if(have_posts()): while(have_posts()) : the_post(); ?>
@@ -219,50 +226,6 @@
 							</div>
 						</div>
 					</div>
-					<?php if ($googleMap): ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-						<script type="text/javascript">
-						    
-						    function etheme_google_map() {
-						        var styles = {};
-						        
-						        var myLatlng = new google.maps.LatLng(<?php etheme_option('google_map') ?>);
-						        var myOptions = {
-						            zoom: 17,
-						            center: myLatlng,
-						            mapTypeId: google.maps.MapTypeId.ROADMAP,
-						            disableDefaultUI: true,
-						            mapTypeId: '8theme',
-						            draggable: true,
-						            zoomControl: true,
-									panControl: false,
-									mapTypeControl: true,
-									scaleControl: true,
-									streetViewControl: true,
-									overviewMapControl: true,
-						            scrollwheel: false,
-						            disableDoubleClickZoom: false
-						        }
-						        var map = new google.maps.Map(document.getElementById("map"), myOptions);
-						        var styledMapType = new google.maps.StyledMapType(styles['8theme'], {name: '8theme'});
-						        map.mapTypes.set('8theme', styledMapType);
-						        
-						        var marker = new google.maps.Marker({
-						            position: myLatlng, 
-						            map: map,
-						            title:""
-						        });   
-						    }
-						    
-						    jQuery(document).ready(function(){
-							    etheme_google_map();
-						    });
-						    
-						    jQuery(document).resize(function(){
-							    etheme_google_map();
-						    });
-						</script>
-					<?php endif ?>
 				<?php else: ?>
 					<div class="span8">
 						<?php the_content(); ?>

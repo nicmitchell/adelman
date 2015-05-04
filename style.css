@@ -574,3 +574,35 @@ figure.artist-thumbnail {
     max-width: 22.85%;
   }
 }
+
+/* Auctions */
+.product-type-auction .single-product-page .product-info .price {
+  float: none;
+}
+
+.product-type-auction .single-product-page .product-info .auction-condition, 
+.product-type-auction .single-product-page .product-info .yith-wcwl-add-to-wishlist,
+.product-type-auction input.plus, 
+.product-type-auction input.minus {
+  display: none;
+}
+
+.product-type-auction .single-product-page .product-info .quantity .qty {
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.product-type-auction .single-product-page .product-info .bid_button {
+  padding: 10px 32px;
+  color: #fff;
+  background-color: #009ba6;
+  border-color: #009ba6;
+  float: left;
+  position: relative;
+  margin-bottom: 20px;
+  font-size: 21px;
+  clear: both;
+}

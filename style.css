@@ -580,6 +580,7 @@ figure.artist-thumbnail {
   float: none;
 }
 
+/* Product: new, favorites, input inc/dec */
 .product-type-auction .single-product-page .product-info .auction-condition, 
 .product-type-auction .single-product-page .product-info .yith-wcwl-add-to-wishlist,
 .product-type-auction input.plus, 
@@ -587,14 +588,15 @@ figure.artist-thumbnail {
   display: none;
 }
 
+/* Bid amount input */
 .product-type-auction .single-product-page .product-info .quantity .qty {
-  width: auto;
+  width: auto !important;
   height: auto;
   max-height: 100%;
   margin-bottom: 10px;
   font-size: 18px;
 }
-
+/* Bid button */
 .product-type-auction .single-product-page .product-info .bid_button {
   padding: 10px 32px;
   color: #fff;
@@ -605,4 +607,17 @@ figure.artist-thumbnail {
   margin-bottom: 20px;
   font-size: 21px;
   clear: both;
+}
+
+/* Auction tab */
+a#tab_simle_auction_history {
+    display: none;
+}
+
+div#content_tab_simle_auction_history {
+    display: none !important;
+}
+
+.product-type-auction .single-product-page .product-info .quantity.buttons_added {
+    height: auto;
 }

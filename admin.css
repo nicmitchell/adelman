@@ -29,3 +29,35 @@ span.soldout {
 table.wp-list-table .column-name{
   width: auto !important;
 }
+
+/* Hide upload/size guide on Product Additional Options */
+.format-settings:nth-of-type(4), 
+.format-settings:nth-of-type(5) {
+    display: none;
+}
+
+/* Add to Product Additional Options labels */
+.format-settings:nth-of-type(4), .format-settings:nth-of-type(5) {
+    display: none;
+}
+
+.format-settings:nth-of-type(2) label.label:after {
+    content: ' (example: "FAQ")';
+}
+
+.format-settings:nth-of-type(6) label.label:after {
+    content: ' (example: "Backstory")';
+}
+
+.format-settings:nth-of-type(7) label.label:after {
+    content: ' (example: "Backstory Text")';
+}
+
+/* Hide extra Edit Product options */
+span.duplicate {
+    display: none;
+}
+
+span.edit_as_new_draft {
+    display: none;
+}

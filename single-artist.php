@@ -36,12 +36,13 @@
 					global $product, $woocommerce_loop;
 					$title = get_the_title();
 
+					// Original products
 					$args = apply_filters('woocommerce_related_products_args', array(
 						// 'relation' => 'AND',
 						'post_type'				=> 'product',
 						'ignore_sticky_posts'	=> 1,
 						'no_found_rows' 		=> 1,
-						'posts_per_page' 	    => 30,
+						'posts_per_page' 	    => 100,
 						'post__not_in'			=> array($product->id),
 						'post_status'      => 'publish',
 						'tax_query' => array(
@@ -51,7 +52,7 @@
 						    'field' => 'slug',
 						    'terms' => array('Original Artwork', 'Original Artwork on Paper')
 							)
-            ),
+            				),
 						'meta_query' => array(
 							array(
 								'key' => 'provider', // name of custom field
@@ -72,12 +73,13 @@
 
 					wp_reset_postdata(); 
 
+					// Limited Editions, not original
 					$args = apply_filters('woocommerce_related_products_args', array(
 						'relation' => 'AND',
 						'post_type'				=> 'product',
 						'ignore_sticky_posts'	=> 1,
 						'no_found_rows' 		=> 1,
-						'posts_per_page' 	    => 30,
+						'posts_per_page' 	    => 100,
 						'post__not_in'			=> array($product->id),
 						'tax_query' => array(
 							// 'relation' =>  'OR',
@@ -87,7 +89,7 @@
 						    'terms' => array('Original Artwork', 'Original Artwork on Paper'),
 						    'operator' => 'NOT IN',
 							)
-            ),
+           					),
 						'meta_query' => array(
 							array(
 								'key' => 'provider', // name of custom field

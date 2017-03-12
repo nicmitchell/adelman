@@ -109,6 +109,32 @@ h3.widget-title { font-size: 18px; }
   text-indent: 0;
 }
 
+/* Sale icon */
+.label-icon.sale-label {
+    text-transform: uppercase;
+    font-size: 14px;
+    display: block;
+    width: 48px;
+    height: 48px;
+    padding: 13px 0 0 0;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-family: Georgia;
+    background-color: rgba(0,0,0,0.25);
+    background-image: none !important;
+    border: 2px solid rgba(120, 239, 27, 0.8);
+    border-radius: 50%;
+    text-indent: 0;
+    color: rgba(120, 239, 27, 0.8);
+}
+
 /* Replace 'Social' with 'Share' on Product page */
 .share-button-title{
   font-size: 14px;
@@ -369,6 +395,8 @@ html {
   /*opacity: 0;*/
   margin-bottom: 0;
   min-height: 42px;
+  max-height: 42px;
+  overflow: hidden;
 }
 
 /* Reduce spacing between products */
@@ -422,6 +450,22 @@ figure.artist-thumbnail:last-child {
   margin-right: 0;
   float: left;
 }
+
+/* Artist filters */
+.artist-filters {
+  clear: both;
+  min-height: 75px;
+}
+
+#afa-filter-out-of-stock, .artist-filters label {
+  float: left;
+  margin-top: 8px;
+}
+
+#afa-edition-filter {
+  float: left;
+}
+
 .post-type-archive-artist .blog-post.post-grid .post-information .post-info { margin-bottom: 10px; }
 
 /* Single product thumbnails */
@@ -474,6 +518,8 @@ figure.artist-thumbnail:last-child {
 }
 .widget-container.woocommerce.widget_layered_nav {
   float: left;
+  position: relative;
+  z-index: 999;
 }
 .widget_layered_nav ul li a:before { 
   display: none; 
@@ -516,6 +562,11 @@ small.count {
   display: none;
 }
 .toolbar.toolbar-top { margin-top: 0px !important; }
+
+/* Hide bug with subject filter showing on categories page */
+div#woocommerce_layered_nav-17 {
+    display: none;
+}
 
 /* Product Finder */
 #wc_product_finder select#relation {
@@ -620,4 +671,41 @@ div#content_tab_simle_auction_history {
 
 .product-type-auction .single-product-page .product-info .quantity.buttons_added {
     height: auto;
+}
+
+.wpcf7 input[type="submit"] {
+  width: 100%;
+}
+
+/* Variations Hacks */
+.quantity-box {
+  display: none;
+}
+
+/* Show quantity for jewelery */
+.product-cat-jewelry .quantity-box {
+    display: block;
+}
+
+.variations td.value {
+    display: block;
+}
+
+.variations td.value select {
+    width: 100%;
+}
+
+.variations td.label {
+    display: block;
+    padding-bottom: 0px;
+}
+
+/* Initially hide custom engraving boxes until user selects a variation */
+.product-addon-custom-engraving .form-row, .product-addon-custom-engraving h3.addon-name, .product-addon-custom-engraving .addon-description {
+    display: none;
+}
+
+/* Hide label for variations of giclees */
+.variations label[for="pa_version-short"]{
+  display: none;
 }

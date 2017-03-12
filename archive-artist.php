@@ -25,6 +25,11 @@
 <div class="container">
   <div class="page-content sidebar-position-<?php echo $position; ?> responsive-sidebar-<?php echo $responsive; ?>">
     <div class="row">
+      <?php if($position == 'left' || ($responsive == 'top' && $position == 'right')): ?>
+        <div class="<?php echo $sidebar_span; ?> sidebar sidebar-left">
+          <?php etheme_get_sidebar($sidebarname); ?>
+        </div>
+      <?php endif; ?>
 
       <div class="content <?php echo $content_span; ?>">
         <div class="blog-masonry row">
@@ -44,8 +49,22 @@
 
         <?php endif; ?>
 
+        <div class="articles-nav">
+          <div class="left"><?php next_posts_link(__('&larr; Older Posts', ETHEME_DOMAIN)); ?></div>
+          <div class="right"><?php previous_posts_link(__('Newer Posts &rarr;', ETHEME_DOMAIN)); ?></div>
+          <div class="clear"></div>
+        </div>
+
       </div>
+
+      <?php if($position == 'right' || ($responsive == 'bottom' && $position == 'left')): ?>
+        <div class="<?php echo $sidebar_span; ?> sidebar sidebar-right">
+          <?php etheme_get_sidebar($sidebarname); ?>
+        </div>
+      <?php endif; ?>
     </div>
+
+
   </div>
 </div>
 <script>

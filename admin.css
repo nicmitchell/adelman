@@ -61,3 +61,29 @@ span.duplicate {
 span.edit_as_new_draft {
     display: none;
 }
+
+/* Hide Yoast SEO traffic light in submit box */
+.submitbox div#wpseo-score {
+    display: none;
+}
+
+/* Float Advanced Custom Fields (ACF) inputs */
+div#acf-reserved {
+    margin-right: 20px;
+    display: table-cell;
+    padding-right: 30px;
+}
+
+div#acf-sold_date {
+    margin-right: 20px;
+    display: table-cell;
+    padding-right: 30px;
+}
+
+div#acf-orientation {
+    display: table-cell;
+}
+
+div#acf-provider {
+    clear: both;
+}

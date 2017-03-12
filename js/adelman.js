@@ -11,10 +11,28 @@ jQuery(function () {
 });
 
 // Product title in lightbox
-jQuery(document).ready(function(){
+var showLightboxTitle = function(){ 
   jQuery('.main-image-slider a').on('click', function(){
     var title = jQuery('h1.product_title span').text();
     var artist = jQuery('span.artist_name_wrapper a').text();
     jQuery('p.pp_description').text(title + ' - ' + artist).css('display', 'block');
   });
+};
+
+// Toggle custom engraving input boxes 
+var toggleCustomEngraving = function(){
+  jQuery('#pa_custom-engraving').on('click', function(){
+    jQuery(this).on('change', function(evt){
+      var val = evt.currentTarget.value.split('-')[2];
+      var engravings = jQuery('.product-addon-custom-engraving .form-row');
+      engravings.hide().find('input').val('');
+      engravings.find('input[maxlength=' + val + ']').closest('.form-row').show();
+      jQuery('.product-addon-custom-engraving .addon-description').show();
+    });
+  });
+};
+
+jQuery(document).ready(function(){
+  showLightboxTitle();
+  toggleCustomEngraving();
 });

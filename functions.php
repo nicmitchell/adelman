@@ -6,7 +6,7 @@
 
 // Enqueue the parent styles
 function theme_enqueue_styles() {
-  wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
+  wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css', array(), '1.0' );
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
@@ -22,7 +22,7 @@ add_action( 'admin_print_scripts-post.php', 'product_admin_script', 11 );
 
 // Front end custom JS
 function adelman_script() {
-  wp_register_script('adelman-script', get_stylesheet_directory_uri() . '/js/adelman.js', array('jquery'),'1.2', true);
+  wp_register_script('adelman-script', get_stylesheet_directory_uri() . '/js/adelman.js', array('jquery'),'1.14', true);
   wp_enqueue_script('adelman-script');
 }
 add_action( 'wp_enqueue_scripts', 'adelman_script' ); 
@@ -36,54 +36,6 @@ add_action('admin_enqueue_scripts', 'adelman_admin_theme_style');
 // Hide SEO columns
 add_filter( 'wpseo_use_page_analysis', '__return_false' );
 
-// **********************************************************************// 
-// ! Include etheme CSS and JS
-// **********************************************************************// 
-
-// Included only to override the etheme.js file for "mega search"
-if(!function_exists('etheme_enqueue_styles')) {
-  function etheme_enqueue_styles() {
-    global $etheme_responsive, $etheme_theme_data;
-    $etheme_theme_data = wp_get_theme( 'legenda' );
-    $custom_css = etheme_get_option('custom_css');
-    if ( !is_admin() ) {
-      wp_enqueue_style("style",get_stylesheet_directory_uri().'/style.css', array(), $etheme_theme_data->Version);
-      wp_enqueue_style("font-lato",et_http()."fonts.googleapis.com/css?family=Lato:300,400,700,300italic");
-      wp_enqueue_style("open-sans",et_http()."fonts.googleapis.com/css?family=Open+Sans:300,400,700,300italic");
-
-      if($etheme_responsive){
-        wp_enqueue_style("responsive",get_template_directory_uri().'/css/responsive.css', array(), $etheme_theme_data->Version);
-      }
-
-      if($custom_css) {
-        wp_enqueue_style("custom",get_template_directory_uri().'/custom.css', array(), $etheme_theme_data->Version);  
-      }
-
-      $etheme_color_version = etheme_get_option('main_color_scheme');
-      
-      if($etheme_color_version=='dark') {
-        wp_enqueue_style("dark",get_template_directory_uri().'/css/dark.css', array(), $etheme_theme_data->Version);  
-      }
-
-      $script_depends = array();
-
-      if(class_exists('WooCommerce')) {
-        $script_depends = array('wc-add-to-cart-variation');
-      }
-          
-      wp_enqueue_script('head', get_template_directory_uri().'/js/head.js'); // modernizr, owl carousel, Swiper, FullWidth helper
-      if(etheme_get_option('product_img_hover') == 'tooltip')
-        wp_enqueue_script('tooltip', get_template_directory_uri().'/js/tooltip.js');
-      wp_enqueue_script('jquery');
-      wp_enqueue_script('all_plugins', get_template_directory_uri().'/js/plugins.min.js',$script_depends,false,true);
-      wp_enqueue_script('waypoints');
-      wp_enqueue_script('etheme', get_stylesheet_directory_uri().'/js/etheme.js',$script_depends,false,true);
-      wp_localize_script( 'etheme', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'noresults' => __('No results were found!', ETHEME_DOMAIN)));
-    }
-  }
-}
-
-add_action( 'wp_enqueue_scripts', 'etheme_enqueue_styles', 30);
 
 
 // **********************************************************************// 
@@ -168,8 +120,7 @@ function adelman_product_artist() {
   $providers = get_field('provider'); ?>
   <?php if( $providers ): ?>
     <?php foreach( $providers as $provider ): ?>
-      <?php $provider_type = get_post_type( $provider->ID ); ?>
-      <?php echo ucwords($provider_type); ?>: <a href="<?php echo get_permalink( $provider->ID ); ?>">
+      Artist: <a href="<?php echo get_permalink( $provider->ID ); ?>">
       <?php echo get_the_title( $provider->ID ); ?>
       </a>
     <?php endforeach; ?>
@@ -334,158 +285,6 @@ if(!function_exists('etheme_create_slider')) {
   }
 }
 
-//***********************************************************************//
-//* Etheme Global Search */
-//***********************************************************************//
-
-add_action("wp_ajax_et_get_search_result", "et_get_search_result");
-add_action("wp_ajax_nopriv_et_get_search_result", "et_get_search_result");
-if(!function_exists('et_get_search_result')) {
-  function et_get_search_result() {
-    $word = esc_attr(stripslashes($_REQUEST['s']));
-    if(isset($word) && $word != '') {
-      $response = array(
-        'results' => false,
-        'html' => ''
-      );
-      
-      if(isset($_GET['count'])) {
-        $count = $_GET['count'];
-      } else {
-        $count = 3;
-      }
-      
-      if($_GET['products'] && class_exists('WooCommerce')) {
-        $products_args = array(
-          'args' => array(
-            'post_type' => 'product',
-            'post_status' => 'publish',
-            'posts_per_page' => $count,
-              'meta_key' => 'pa_style',
-              'meta_key' => 'pa_subject',
-              'meta_key' => 'pa_provider',
-            's' => $word
-          ),
-          'image' => $_GET['images'],
-          'link' => true,
-          'title' => __('View Products', ETHEME_DOMAIN),
-          'class' => 'et-result-products'
-        );
-        $products = et_search_get_result($products_args);
-        if($products) {
-          $response['results'] = true;
-          $response['html'] .= $products;
-        }
-      }
-
-      if($_GET['artists']) {
-          $artists_args = array(
-            'args' => array(
-              'post_type' => 'artist',
-              'post_status' => 'publish',
-              'posts_per_page' => $count,
-              's' => $word
-            ),
-            'title' => __('View Artists', ETHEME_DOMAIN),
-            'image' => false, //$_GET['images'],
-            'link' => true,
-            'class' => 'et-result-post'
-          );
-          $artists = et_search_get_result($artists_args);
-          if($artists) {
-              $response['results'] = true;
-              $response['html'] .= $artists;
-          }
-      }
-
-      if($_GET['jewelers']) {
-          $jewelers_args = array(
-            'args' => array(
-              'post_type' => 'jeweler',
-              'post_status' => 'publish',
-              'posts_per_page' => $count,
-              's' => $word
-            ),
-            'title' => __('View jewelers', ETHEME_DOMAIN),
-            'image' => false, //$_GET['images'],
-            'link' => true,
-            'class' => 'et-result-post'
-          );
-          $jewelers = et_search_get_result($jewelers_args);
-          if($jewelers) {
-              $response['results'] = true;
-              $response['html'] .= $jewelers;
-          }
-      }
-      
-      if($_GET['posts']) {
-        $posts_args = array(
-          'args' => array(
-            'post_type' => 'post',
-            'post_status' => 'publish',
-            'posts_per_page' => $count,
-            's' => $word
-          ),
-          'title' => __('From the blog', ETHEME_DOMAIN),
-          'image' => false,
-          'link' => true,
-          'class' => 'et-result-post'
-        );
-        $posts = et_search_get_result($posts_args);
-        if($posts) {
-          $response['results'] = true;
-          $response['html'] .= $posts;
-        }
-      }
-      
-      if($_GET['portfolio']) {
-        $portfolio_args = array(
-          'args' => array(
-            'post_type' => 'etheme_portfolio',
-            'post_status' => 'publish',
-            'posts_per_page' => $count,
-            's' => $word
-          ),
-          'image' => false,
-          'link' => false,
-          'title' => __('Portfolio', ETHEME_DOMAIN),
-          'class' => 'et-result-portfolio'
-        );
-        $portfolio = et_search_get_result($portfolio_args);
-        if($portfolio) {
-          $response['results'] = true;
-          $response['html'] .= $portfolio;
-        }
-      }
-      
-      if($_GET['pages']) {
-        $pages_args = array(
-          'args' => array(
-            'post_type' => 'page',
-            'post_status' => 'publish',
-            'posts_per_page' => $count,
-            's' => $word
-          ),
-          'image' => false,
-          'link' => false,
-          'title' => __('Pages', ETHEME_DOMAIN),
-          'class' => 'et-result-pages'
-        );
-        $pages = et_search_get_result($pages_args);
-        if($pages) {
-          $response['results'] = true;
-          $response['html'] .= $pages;
-        }
-      }
-      
-      echo json_encode($response);
-      
-      die();
-    } else {
-      die();
-    }
-  }
-}
 
 // **********************************************************************// 
 // ! Filter products by type in Products admin

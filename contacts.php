@@ -113,9 +113,6 @@
 				frameborder="0" 
 				style="border:0">
 			</iframe>
-			<!-- <div id="map" class="google-map googlemap-wide">
-			    <p>Enable your JavaScript!</p>
-			</div>	 -->
 		<?php endif ?>
 		<div class="row-fluid">
 			<?php if(have_posts()): while(have_posts()) : the_post(); ?>
@@ -125,110 +122,24 @@
 							<div class="span7">
 								<h3 class="contact-form-title"><?php _e('Contact Form', ETHEME_DOMAIN) ?></h3>
 								<div id="contactsMsgs"></div>
-								<!-- <form action="<?php the_permalink(); ?>" method="post" id="contact-form"> -->
-										
-										<!-- <div class="row-fluid">
-											
-											<div class="span6">
-												<p class="form-name">
-													<label for="name"><?php _e('Name and Surname', ETHEME_DOMAIN) ?> <span class="required">*</span></label>
-													<input type="text" name="contact-name" class="required-field" id="contact-name">
-												</p>
-											</div>
-											<div class="span6">
-												<p class="form-name">
-													<label for="name"><?php _e('Email', ETHEME_DOMAIN) ?> <span class="required">*</span></label>
-													<input type="text" name="contact-email" class="required-field" id="contact-email">
-												</p>
-											</div>
-
-										</div>
-										
-										<p class="form-name hidden">
-											<label for="name"><?php _e('Website', ETHEME_DOMAIN) ?></label>
-											<input type="text" name="contact-website" id="contact-website">
-										</p>
-										
-										<p class="form-textarea">
-											<label for="contact_msg"><?php _e('Message', ETHEME_DOMAIN); ?> <span class="required">*</span></label>
-											<textarea name="contact-msg" id="contact-msg" class="required-field" cols="30" rows="7"></textarea>
-										</p> 
-										<p class="a-right" style="margin-bottom: 20px;">
-											<input type="checkbox" name="newsletter" id="newsletter">
-											<label for="newsletter">Yes, Subscribe Me to Newsletter!</label>
-										</p>
-										<p class="a-right">
-											<input type="hidden" name="contact-submit" id="contact-submit" value="true" >
-											<span class="spinner"><?php _e('Sending...', ETHEME_DOMAIN) ?></span>
-											<button class="button" id="submit" type="submit"><?php _e('Send message', ETHEME_DOMAIN) ?></button>
-										</p> -->
 								<?php echo do_shortcode('[contact-form-7 id="3336" title="Contact form 1"]'); ?>
-									<p class="a-right" style="margin: 20px 0;">
-										<input type="checkbox" name="newsletter" id="newsletter">
-										<label for="newsletter">Yes, Subscribe Me to Newsletter!</label>
-									</p>
 									<div class="clear"></div>
 									<!-- Newsletter Signup Style -->
 									<style>
-									  input#newsletter {
+									  input#ctctcf7_lists {
 									    width: 20px;
 									    margin-left: 10px;
 									    background-size: 20px;
 									}
-									.a-right label {
-										display: inline;
-									}
-									input[type="submit"] {
+									#wpcf7-f3336-p147-o1 input[type="submit"]{
 									    width: 20% !important;
 									    float: right;
-									 }
+									}
+									span.wpcf7-form-control-wrap.ctct-910 label {
+									    text-align: right;
+									}
 									</style>
 								<!-- </form> -->
-
-								<!-- Newsletter form -->
-								<div id="hidden-newsletter" style="display:none">
-								  <script type="text/javascript">
-									//<![CDATA[
-									window.gon={};gon.payment_method_available=false;gon.plans={"free":{"price":0,"level":0,"annual":false,"permissions":{"branding_removal":false,"basic_analytics":false,"advanced_analytics":false,"premium_themes":false,"content_gate":false},"id":"free","name":"Free"},"silver":{"price":900,"level":1,"annual":false,"permissions":{"branding_removal":true,"basic_analytics":true},"id":"mailmunch-silver","name":"Silver"},"silver-annual":{"price":7560,"level":1,"annual":true,"permissions":{"branding_removal":true,"basic_analytics":true},"id":"mailmunch-silver-annual","name":"Silver (Annual)"},"gold":{"price":1900,"level":2,"annual":false,"permissions":{"branding_removal":true,"basic_analytics":true,"advanced_analytics":true,"premium_themes":true,"content_gate":true},"id":"mailmunch-gold","name":"Gold"},"gold-annual":{"price":15960,"level":2,"annual":true,"permissions":{"branding_removal":true,"basic_analytics":true,"advanced_analytics":true,"premium_themes":true,"content_gate":true},"id":"mailmunch-gold-annual","name":"Gold (Annual)"},"platinum":{"price":4900,"level":3,"annual":false,"permissions":{"branding_removal":true,"basic_analytics":true,"advanced_analytics":true,"premium_themes":true,"content_gate":true},"id":"mailmunch-platinum","name":"Platinum"},"platinum-annual":{"price":41160,"level":3,"annual":true,"permissions":{"branding_removal":true,"basic_analytics":true,"advanced_analytics":true,"premium_themes":true,"content_gate":true},"id":"mailmunch-platinum-annual","name":"Platinum (Annual)"}};gon.widget_id=42948;gon.site_id=33815;gon.content_gate=false;
-									//]]>
-
-										// Add the email to the newsletter
-										jQuery('.wpcf7-submit').on('click', function(){
-											if(jQuery('input#newsletter').is(':checked')){
-												var email = jQuery('#contact-email').val();
-												jQuery('#hidden-newsletter .email-field').val(email);
-												jQuery('#hidden-newsletter input[name="hidden-submit"]').click();
-											}
-										});
-									</script>
-								  <script src="//mailmunch.s3.amazonaws.com/production/assets/widget-0e9b06866f30d7845fd39db5703fed5a.js"></script>
-									<div class="theme theme-simple live">
-								    <div id="new_contact" class="new_contact">
-											<div id="mailmunch-optin-form">
-											  <div class="screen optin-form-screen" data-screen-name="Optin Form">
-											    <div class="optin-form-wrapper clearfix">
-											      <div id="custom_html_html" class="optin-form custom_html">
-											      	<div class="custom-fields-preview-container">
-											      		<div class="custom-field-preview-container required" data-custom-field-id="97158">
-																  <div class="email-field-wrapper">
-																    <input type="email" id="custom_field_text_field_97158" name="contact[contact_fields_attributes][97158][value]" value="" placeholder="Enter your email" style="" class="input-field email-field">
-																    <input type="hidden" name="contact[contact_fields_attributes][97158][label]" value="Email">
-																    <input type="hidden" name="contact[contact_fields_attributes][97158][custom_field_id]" value="97158">
-																  </div>
-																</div>
-																<div class="custom-field-preview-container" data-custom-field-id="97159">
-																  <div class="submit-wrapper">
-																    <input type="submit" id="custom_field_submit_97159" name="hidden-submit" value="Subscribe" style="color: #FFFFFF; background-color: #009ba6;" class="submit">
-																  </div>
-																</div>
-															</div>
-														</div>
-											    </div>
-											  </div>
-											</div>
-								    </div>
-									</div>
-								</div>
 							</div>
 							<div class="span5">
 								<?php the_content(); ?>

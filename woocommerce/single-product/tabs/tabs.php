@@ -4,10 +4,12 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.0.0
+ * @version 2.4.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Filter tabs and allow third parties to add their own
@@ -41,8 +43,11 @@ if(!empty($tabs['additional_information'])) {
                 <a href="#tab_8" id="tab_8" class="tab-title">Artist</a>
                 <div id="content_tab_8" class="tab-content">
                     <div class="artist-bio">
-                        <?php $content = apply_filters('the_content', preg_replace("/\[([^\[\]]++|(?R))*+\]/", "", $provider->post_content)); ?>
-                        <?php echo preg_replace('/About the Artist/i', '', $content, 1) ?>
+                        <?php
+                            $content = preg_replace("/\[vc_raw_html\]([\s\S]*?)\[\/vc_raw_html\]/", "", $provider->post_content);
+                            $content = apply_filters('the_content', preg_replace("/\[([^\[\]]++|(?R))*+\]/", "", $content)); 
+                            echo preg_replace('/About the Artist/i', '', $content, 1);
+                        ?>
                         <a href="<?php echo get_permalink($provider->ID); ?>">Visit Artist's Page</a>
                     </div>
                 </div>
@@ -52,7 +57,7 @@ if(!empty($tabs['additional_information'])) {
                 <a href="#tab_8" id="tab_8" class="tab-title">Jeweler</a>
                 <div id="content_tab_8" class="tab-content">
                     <div class="artist-bio">
-                        <?php $content = apply_filters('the_content', preg_replace("/\[([^\[\]]++|(?R))*+\]/", "", $provider->post_content)); ?>
+                        <?php //$content = apply_filters('the_content', preg_replace("/\[([^\[\]]++|(?R))*+\]/", "", $provider->post_content)); ?>
                         <?php echo preg_replace('/About the Jeweler/i', '', $content, 1) ?>
                         <a href="<?php echo get_permalink($provider->ID); ?>">Visit Jeweler's Page</a>
                     </div>

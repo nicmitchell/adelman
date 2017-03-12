@@ -1,4 +1,3 @@
-
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 ?>
@@ -91,10 +90,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		    	 <a rel="<?php echo $lightbox_rel; ?>" href="<?php etheme_custom_field('size_guide_img'); ?>"><?php _e('SIZING GUIDE', ETHEME_DOMAIN); ?></a>
 		        </div>
 		    <?php endif; ?>	
-
+			<?php $reserved = get_field('reserved'); ?>
+			<?php if (!$reserved): ?>
 			<?php woocommerce_template_single_add_to_cart(); ?>
+			<?php endif; ?>
 
 			<?php woocommerce_template_single_meta(); ?>
+			<?php if($reserved): ?>
+			<h4>This item is reserved</h4>
+			<?php endif; ?>
             
             <?php if(etheme_get_option('share_icons')): ?>
 							<span class="share-button-title">Share</span>

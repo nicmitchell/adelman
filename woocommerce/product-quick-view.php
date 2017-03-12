@@ -93,7 +93,7 @@ $zoom = etheme_get_option('zoom_effect');
 			<?php woocommerce_template_single_excerpt(); ?>
 		<?php endif; ?>
 
-		<?php if (etheme_get_option('quick_add_to_cart')): ?>
+		<?php if (etheme_get_option('quick_add_to_cart') && !get_field('reserved')): ?>
 			<?php woocommerce_template_single_add_to_cart(); ?>
 		<?php endif; ?>
         

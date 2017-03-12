@@ -117,7 +117,7 @@
 							'post_type'				=> 'product',
 							'ignore_sticky_posts'	=> 1,
 							'no_found_rows' 		=> 1,
-							'posts_per_page' 	    => 30,
+							'posts_per_page' 	    => 100,
 							'post__not_in'			=> array($product->id),
 							'meta_query' => array(
 								array(
@@ -145,16 +145,24 @@
 					
 					<script>
 					jQuery('document').ready(function(){
-						var select = '<select id="filter" style="margin: 0px 0 25px 15px;""><option>All</option><option value="original">Original</option><option value="limited">Limited Edition</option></select>';
-						jQuery('.items-slider').before(select);
+						var filters = 
+						'<div class="artist-filters">' +
+							'<select id="afa-edition-filter" style="margin: 0px 15px 25px 15px;"><option>All</option><option value="original">Original</option><option value="limited">Limited Edition</option></select>' + 
+							'<input type="checkbox" id="afa-filter-out-of-stock"><label for="afa-filter-out-of-stock">Hide Sold Items</label>'+
+						'</div>';
+						jQuery('.items-slider').before(filters);
 
-						jQuery('#filter').on('change', function () {
+						jQuery('#afa-edition-filter').on('change', function () {
 							jQuery("div[class*='post-']").show(); // show any hidden products
 							var selected = jQuery(this).val();
 							var hidden = jQuery('span#' + selected).text().split(',').slice(0,-1);
 							for(var i = 0; i < hidden.length; i++){
 								jQuery('.post-' + hidden[i]).hide();
 							}
+							jQuery('.slide-item .outofstock').toggle(!jQuery('#afa-filter-out-of-stock').is(':checked'));
+						});
+						jQuery('#afa-filter-out-of-stock').on('change', function(){
+							jQuery('.slide-item .outofstock').toggle(!jQuery(this).is(':checked'));
 						});
 					});
 					</script>

@@ -29,23 +29,23 @@
 					<?php 
 				
 					$all_jewelry = array(
-						'womens' => ['image_count' => 0],
-						'mens' => ['image_count' => 0]
+						'womens' => array('image_count' => 0),
+						'mens' => array('image_count' => 0)
 					);
 
 					// Get/set attribute IDs for women / men jewelry
 					$gender_terms = get_terms("pa_gender");
-					$womens_id = 0;
-					$mens_id = 0;
+					$womens_id = 'womens-jewelry';
+					$mens_id = 'mens-jewelry';
 
-					foreach ( $gender_terms as $term ):
-						$gender = $term->slug;
-						if (preg_match('/women/', $gender)):
-							$womens_id = $term->term_id;
-						elseif (preg_match('/men/', $gender)):
-							$mens_id = $term->term_id;
-						endif;
-					endforeach;
+					// foreach ( $gender_terms as $term ):
+					// 	$gender = $term->slug;
+					// 	if (preg_match('/women/', $gender)):
+					// 		$womens_id = $term->term_id;
+					// 	elseif (preg_match('/men/', $gender)):
+					// 		$mens_id = $term->term_id;
+					// 	endif;
+					// endforeach;
 
 					// Get attribute IDs for jewelry-type attribute
 					$jewelry_type_terms = get_terms("pa_jewelry-type");
@@ -62,10 +62,10 @@
 						$category_slug = $category[0];
 						$term_id;
 						
-						// Get the category attibute id based on the slug
+						// Get the category attribute id based on the slug
 						foreach ( $jewelry_type_terms as $term ):
 							if ($term->slug === $category_slug):
-								$term_id = $term->term_id;
+								$term_id = $term->slug;
 								break;
 							endif;
 						endforeach; 
@@ -75,11 +75,11 @@
 							'gender_id' => $gender_id,
 							'category' => $category_slug,
 							'image' => $field['sizes']['medium'],
-							'link' => get_site_url(). '/brand/'. $brand
+							'link' => get_site_url(). '/brand/'. $brand .'?filtering=1'
 						);
 
-						if ($jewelry['gender_id']) $jewelry['link'] .= '?filtering=1&filter_gender='. $jewelry['gender_id'];
-						if ($jewelry['id']) $jewelry['link'] .= '?filtering=1&filter_jewelry-type='. $jewelry['id'];
+						if ($jewelry['gender_id']) $jewelry['link'] .= '&filter_gender='. $jewelry['gender_id'];
+						if ($jewelry['id']) $jewelry['link'] .= '&filter_jewelry-type='. $jewelry['id'];
 
 						// Split the jewelry_attrs array based on gender
 						// Only add it if there is an image present
@@ -104,7 +104,7 @@
 					    		<?php if($values['image_count'] > 0): ?>
 
 							      <div class="slider-container  posts-count-gt1">
-							        <h2 class="title"><span><?php echo ucwords($gender); ?>'s Jewlery</span></h2>
+							        <h2 class="title"><span><?php echo rtrim(ucwords($gender), "s"); ?>'s Jewlery</span></h2>
 							        <div class="items-slider products-slider grid-container slider-9853">
 							          <div class="slider grid-wrapper">
 

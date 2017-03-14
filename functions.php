@@ -428,9 +428,11 @@ class iWC_Orderby_Stock_Status {
   }
 
   public function order_by_stock_status($posts_clauses) {
-    global $wpdb;
-    // only change query on WooCommerce loops
-    if (is_woocommerce() && (is_shop() || is_product_category() || is_product_tag())) {
+    global $wpdb, $post;
+    // only change query on WooCommerce loops and valid post types
+    $post_type = get_post_type( $post->ID );
+    $valid_post_type = ($post_type === 'artist' || $post_type === 'jeweler');
+    if ((is_woocommerce() && (is_shop() || is_product_category() || is_product_tag())) || $valid_post_type) {
       $posts_clauses['join'] .= " INNER JOIN $wpdb->postmeta istockstatus ON ($wpdb->posts.ID = istockstatus.post_id) ";
       $posts_clauses['orderby'] = " istockstatus.meta_value ASC, " . $posts_clauses['orderby'];
       $posts_clauses['where'] = " AND istockstatus.meta_key = '_stock_status' AND istockstatus.meta_value <> '' " . $posts_clauses['where'];

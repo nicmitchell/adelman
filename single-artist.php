@@ -39,12 +39,12 @@
 					// Original products
 					$args = apply_filters('woocommerce_related_products_args', array(
 						// 'relation' => 'AND',
-						'post_type'				=> 'product',
+						'post_type' => 'product',
 						'ignore_sticky_posts'	=> 1,
-						'no_found_rows' 		=> 1,
-						'posts_per_page' 	    => 100,
-						'post__not_in'			=> array($product->id),
-						'post_status'      => 'publish',
+						'no_found_rows' => 1,
+						'posts_per_page' => 100,
+						'post__not_in' => array($product->id),
+						'post_status' => 'publish',
 						'tax_query' => array(
 							// 'relation' =>  'OR',
 							 array(
@@ -57,7 +57,9 @@
 							array(
 								'key' => 'provider', // name of custom field
 								'value' => '"' . get_the_ID() . '"', // matches exactly "123", not just 123. This prevents a match for "1234"
-								'compare' => 'LIKE'
+								'compare' => 'LIKE',
+								'orderby' => 'meta_value',
+								'meta_key' => '_stock_status'
 							)
 						)
 					));
@@ -94,7 +96,9 @@
 							array(
 								'key' => 'provider', // name of custom field
 								'value' => '"' . get_the_ID() . '"',
-								'compare' => 'LIKE'
+								'compare' => 'LIKE',
+								'orderby' => 'meta_value',
+								'meta_key' => '_stock_status'
 							)
 						)
 					));
@@ -123,7 +127,9 @@
 								array(
 									'key' => 'provider', // name of custom field
 									'value' => '"' . get_the_ID() . '"',
-									'compare' => 'LIKE'
+									'compare' => 'LIKE',
+									'orderby' => 'meta_value',
+									'meta_key' => '_stock_status'
 								)
 							)
 						));

@@ -444,6 +444,21 @@ new iWC_Orderby_Stock_Status;
 
 
 // **********************************************************************// 
+// ! Change 'Out of stock' strings
+// **********************************************************************// 
+
+function adelman_change_text_strings( $translated_text, $text, $domain ) {
+  switch ( $translated_text ) {
+    case 'Out of stock' :
+      $translated_text = __( 'Sold', 'ETHEME_DOMAIN' );
+      break;
+  }
+  return $translated_text;
+}
+add_filter( 'gettext', 'adelman_change_text_strings', 20, 3 );
+
+
+// **********************************************************************// 
 // ! Add PrettyPhoto 'rel' attribute for lightbox
 // **********************************************************************// 
  

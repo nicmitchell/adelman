@@ -338,7 +338,7 @@ add_filter( 'parse_query', 'adelman_featured_products_admin_filter_query' );
 // **********************************************************************// 
 // ! Sold Out Products Order
 // **********************************************************************// 
-
+// ?? Not currently used ??
 /**
    * shortcode function.
    *
@@ -405,6 +405,41 @@ add_filter( 'parse_query', 'adelman_featured_products_admin_filter_query' );
   }
 
 add_shortcode( 'sold_out_products', 'sold_out_products_shortcode' );
+
+// **********************************************************************// 
+// ! Sort Products Order
+// **********************************************************************// 
+// Order product collections by stock status, in-stock products first.
+// http://stackoverflow.com/questions/25113581/show-out-of-stock-products-at-the-end-in-woocommerce
+
+// TODO: 
+// - Use pre_get_posts 
+// - Display in following order:
+//   1 New available artwork first (with the "New" label, meta_key: 'product_new')
+//   2 Non-new available work
+//   3 All solds last
+
+class iWC_Orderby_Stock_Status {
+  public function __construct(){
+    // Check if WooCommerce is active
+    if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+      add_filter('posts_clauses', array($this, 'order_by_stock_status'), 2000);
+    }
+  }
+
+  public function order_by_stock_status($posts_clauses) {
+    global $wpdb;
+    // only change query on WooCommerce loops
+    if (is_woocommerce() && (is_shop() || is_product_category() || is_product_tag())) {
+      $posts_clauses['join'] .= " INNER JOIN $wpdb->postmeta istockstatus ON ($wpdb->posts.ID = istockstatus.post_id) ";
+      $posts_clauses['orderby'] = " istockstatus.meta_value ASC, " . $posts_clauses['orderby'];
+      $posts_clauses['where'] = " AND istockstatus.meta_key = '_stock_status' AND istockstatus.meta_value <> '' " . $posts_clauses['where'];
+    }
+    return $posts_clauses;
+  }
+}
+new iWC_Orderby_Stock_Status;
+
 
 // **********************************************************************// 
 // ! Add PrettyPhoto 'rel' attribute for lightbox

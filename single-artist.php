@@ -27,110 +27,36 @@
 				<?php while ( have_posts() ) : the_post(); ?>
 
 					<?php 
+						global $product;
 
-					/*
-					*  Query Products for a pa_version-short => original-like attributes.
-					*  This method uses the meta_query LIKE to match the string "123" to the database value a:1:{i:0;s:3:"123";} (serialized array)
-					*/
-				
-					global $product, $woocommerce_loop;
-					$title = get_the_title();
-
-					// Original products
-					$args = apply_filters('woocommerce_related_products_args', array(
-						// 'relation' => 'AND',
-						'post_type' => 'product',
-						'ignore_sticky_posts'	=> 1,
-						'no_found_rows' => 1,
-						'posts_per_page' => 100,
-						'post__not_in' => array($product->id),
-						'post_status' => 'publish',
-						'tax_query' => array(
-							// 'relation' =>  'OR',
-							 array(
-						    'taxonomy' => 'pa_version-short',
-						    'field' => 'slug',
-						    'terms' => array('Original Artwork', 'Original Artwork on Paper')
-							)
-            				),
-						'meta_query' => array(
-							array(
-								'key' => 'provider', // name of custom field
-								'value' => '"' . get_the_ID() . '"', // matches exactly "123", not just 123. This prevents a match for "1234"
-								'compare' => 'LIKE',
-								'orderby' => 'meta_value',
-								'meta_key' => '_stock_status'
-							)
-						)
-					));
-
-					$the_query = new WP_Query( $args );
-					if(isset($the_query->posts) && !empty($the_query->posts)){
-						echo '<span style="display: none;" id="limited">';
-						foreach( $the_query->posts as $post) {
-							echo $post->ID . ',';
-						}
-						echo '</span>';
-					}
-
-					wp_reset_postdata(); 
-
-					// Limited Editions, not original
-					$args = apply_filters('woocommerce_related_products_args', array(
-						'relation' => 'AND',
-						'post_type'				=> 'product',
-						'ignore_sticky_posts'	=> 1,
-						'no_found_rows' 		=> 1,
-						'posts_per_page' 	    => 100,
-						'post__not_in'			=> array($product->id),
-						'tax_query' => array(
-							// 'relation' =>  'OR',
-							 array(
-						    'taxonomy' => 'pa_version-short',
-						    'field' => 'slug',
-						    'terms' => array('Original Artwork', 'Original Artwork on Paper'),
-						    'operator' => 'NOT IN',
-							)
-           					),
-						'meta_query' => array(
-							array(
-								'key' => 'provider', // name of custom field
-								'value' => '"' . get_the_ID() . '"',
-								'compare' => 'LIKE',
-								'orderby' => 'meta_value',
-								'meta_key' => '_stock_status'
-							)
-						)
-					));
-
-					$the_query = new WP_Query( $args );
-					if(isset($the_query->posts) && !empty($the_query->posts)){
-						echo '<span style="display: none;" id="original">';
-						foreach( $the_query->posts as $post) {
-							echo $post->ID . ',';
-						}
-						echo '</span>';
-					}
-
-					wp_reset_postdata(); ?>
-
-					<?php
-
+						// Combined original and limited edition works
 						$args = apply_filters('woocommerce_related_products_args', array(
 							'relation' => 'AND',
-							'post_type'				=> 'product',
+							'post_type' => 'product',
+							'post_status' => 'publish',
 							'ignore_sticky_posts'	=> 1,
-							'no_found_rows' 		=> 1,
-							'posts_per_page' 	    => 100,
-							'post__not_in'			=> array($product->id),
+							'no_found_rows' => 1,
+							'posts_per_page' => 100,
+							'post__not_in' => array($product->id),
 							'meta_query' => array(
 								array(
-									'key' => 'provider', // name of custom field
-									'value' => '"' . get_the_ID() . '"',
-									'compare' => 'LIKE',
-									'orderby' => 'meta_value',
-									'meta_key' => '_stock_status'
+									'relation' => 'AND',
+									'sold_clause' => array(
+								    'key' => '_stock_status'
+									),
+									'new_clause' => array(
+								    'key' => 'product_new'
+									),
+									'provider_clause' => array(
+										'key' => 'provider',
+										'value' => '"' . get_the_ID() . '"',
+										'compare' => 'LIKE',	
+									)
 								)
+							),
+							'orderby' => array(
+								'sold_clause' => 'ASC',
+								'new_clause' => 'DESC'
 							)
 						));
 

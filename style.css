@@ -149,11 +149,6 @@ h3.widget-title { font-size: 18px; }
 }
 .share-title { display:none; }
 
-/* Adjust sold icon on main image */
-.product-info .images span.label-icon.out-of-stock {
-  left: 25px;
-}
-
 /* Hide big red Sold Out badge on single product page */
 .content .row.product-info span.soldout {
   display: none;

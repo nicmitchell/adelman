@@ -109,6 +109,11 @@ h3.widget-title { font-size: 18px; }
   text-indent: 0;
 }
 
+/* Hide the Legenda out-of-stock label so we do not get duplicates in slider loops*/
+span.out-of-stock:not(.label-icon) {
+    display: none;
+}
+
 /* Sale icon */
 .label-icon.sale-label {
     text-transform: uppercase;

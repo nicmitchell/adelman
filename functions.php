@@ -336,9 +336,8 @@ function adelman_featured_products_admin_filter_query( $query ) {
 add_filter( 'parse_query', 'adelman_featured_products_admin_filter_query' );
 
 // **********************************************************************// 
-// ! Sold Out Products Order
+// ! Sold Out Products Order Shortcode (Home Page)
 // **********************************************************************// 
-// Currently used on home page. Used to sort by sold date
 /**
    * shortcode function.
    *
@@ -456,6 +455,41 @@ function adelman_change_text_strings( $translated_text, $text, $domain ) {
   return $translated_text;
 }
 add_filter( 'gettext', 'adelman_change_text_strings', 20, 3 );
+
+
+// **********************************************************************// 
+// ! Product Labels
+// **********************************************************************// 
+
+function etheme_wc_product_labels( $product_id = '' ) { 
+    echo etheme_wc_get_product_labels($product_id);
+}
+
+function etheme_wc_get_product_labels( $product_id = '' ) {
+  global $post, $wpdb,$product;
+    $count_labels = 0; 
+    $output = '';
+
+    if ( etheme_get_option('sale_icon') ) : 
+      if ($product->is_on_sale()) {$count_labels++; 
+        $output .= '<span class="label-icon sale-label">'.__( 'Sale!', ETHEME_DOMAIN ).'</span>';
+      }
+    endif; 
+    
+    if ( etheme_get_option('new_icon') ) : $count_labels++; 
+      if(etheme_product_is_new($product_id)) :
+        $second_label = ($count_labels > 1) ? 'second_label' : '';
+        $output .= '<span class="label-icon new-label '.$second_label.'">'.__( 'New!', ETHEME_DOMAIN ).'</span>';
+      endif;
+    endif;
+
+    if ( !$product->is_in_stock() && etheme_get_option('out_of_label')):
+      // will not show other labels if is sold
+      $output = '<span class="label-icon out-of-stock">'. __('Sold', ETHEME_DOMAIN) .'</span>';
+    endif;
+
+    return $output;
+}
 
 
 // **********************************************************************// 

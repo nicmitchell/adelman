@@ -2,13 +2,13 @@
 /**
  * Single Product tabs
  *
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
+ * @author      WooThemes
+ * @package     WooCommerce/Templates
  * @version 2.4.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 /**
@@ -23,7 +23,7 @@ if(!empty($tabs['additional_information'])) {
 }
 ?>
 
-	<div class="tabs <?php etheme_option('tabs_type'); ?>"> 
+    <div class="tabs <?php etheme_option('tabs_type'); ?>"> 
            
         <!-- Backstory -->
         <?php if (etheme_get_custom_field('custom_tab1_title') && etheme_get_custom_field('custom_tab1_title') != '' ) : ?>
@@ -35,8 +35,8 @@ if(!empty($tabs['additional_information'])) {
         
         <!-- Provider -->
         <?php $provider = get_field('provider'); ?>
-        <?php $provider = array_shift($provider); ?>
-        <?php if ($provider): ?>
+        <?php if (is_array($provider)): ?>
+            <?php $provider = array_shift($provider); ?>
             <?php $type = get_post_type($provider); ?>
             <!-- tab for Artist -->
             <?php if ($type === 'artist'): ?>
@@ -70,19 +70,19 @@ if(!empty($tabs['additional_information'])) {
         
         <!-- Others -->
         <?php if ( ! empty( $tabs ) ) : ?>
-			<?php foreach ( $tabs as $key => $tab ) : ?>
-				<a href="#tab_<?php echo $key ?>" id="tab_<?php echo $key ?>" class="tab-title"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $tab['title'], $key ) ?></a>
-				<div class="tab-content" id="content_tab_<?php echo $key ?>">
-					<?php call_user_func( $tab['callback'], $key, $tab ) ?>
-				</div>
-			<?php endforeach; ?>
-		<?php endif; ?>
+            <?php foreach ( $tabs as $key => $tab ) : ?>
+                <a href="#tab_<?php echo $key ?>" id="tab_<?php echo $key ?>" class="tab-title"><?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $tab['title'], $key ) ?></a>
+                <div class="tab-content" id="content_tab_<?php echo $key ?>">
+                    <?php call_user_func( $tab['callback'], $key, $tab ) ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
         
         <!-- Global -->
         <?php if (etheme_get_option('custom_tab_title') && etheme_get_option('custom_tab_title') != '' ) : ?>
             <a href="#tab_9" id="tab_9" class="tab-title"><?php etheme_option('custom_tab_title'); ?></a>
             <div id="content_tab_9" class="tab-content">
-        		<?php echo do_shortcode(etheme_get_option('custom_tab')); ?>
+                <?php echo do_shortcode(etheme_get_option('custom_tab')); ?>
             </div>
-        <?php endif; ?>	
-	</div>
+        <?php endif; ?> 
+    </div>

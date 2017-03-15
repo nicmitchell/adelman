@@ -87,3 +87,7 @@ div#acf-orientation {
 div#acf-provider {
     clear: both;
 }
+
+div#acf-linked_product .acf_relationship.loading {
+  left: 0;
+}

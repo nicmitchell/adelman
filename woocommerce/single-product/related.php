@@ -49,7 +49,9 @@ $args = apply_filters('woocommerce_related_products_args', array(
 ));
 
 $slider_args = array(
-  'title' =>__('More From This '. ucfirst($provider_type), ETHEME_DOMAIN)
+  'title' =>__('More From This '. ucfirst($provider_type), ETHEME_DOMAIN),
+  'items' => '[[0, 1], [479,2], [619,2], [768,4], [1200, 6], [1600, 6]]',
+  'style' => 'default'
 );
 
 etheme_create_slider($args, $slider_args);

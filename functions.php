@@ -112,6 +112,16 @@ add_action('init', 'cptui_register_my_cpt_jeweler');
   ); 
 }
 
+// **********************************************************************// 
+// ! Set the number of items on 'Artist' archive page to show all
+// **********************************************************************// 
+function adelman_artists_per_page( $query ) {
+  if( $query->is_main_query() && $query->is_post_type_archive('artist') ) {
+    $query->set( 'posts_per_page', -1 );
+  }
+}
+add_filter( 'pre_get_posts', 'adelman_artists_per_page' );
+
 
 // **********************************************************************// 
 // ! Get provider for Product

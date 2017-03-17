@@ -247,7 +247,7 @@ if(!function_exists('etheme_create_slider')) {
 
             <script type="text/javascript">
                 jQuery(".slider-'.$box_id.' .slider").owlCarousel({
-                    items:4, 
+                    items: 4, 
                     lazyLoad : true,
                     navigation: true,
                     navigationText:false,
@@ -485,8 +485,8 @@ function etheme_wc_get_product_labels( $product_id = '' ) {
         $output .= '<span class="label-icon sale-label">'.__( 'Sale!', ETHEME_DOMAIN ).'</span>';
       }
     endif; 
-    
-    if ( etheme_get_option('new_icon') ) : $count_labels++; 
+
+    if ( etheme_get_option('new_icon') ) : $count_labels++;
       if(etheme_product_is_new($product_id)) :
         $second_label = ($count_labels > 1) ? 'second_label' : '';
         $output .= '<span class="label-icon new-label '.$second_label.'">'.__( 'New!', ETHEME_DOMAIN ).'</span>';
@@ -500,6 +500,62 @@ function etheme_wc_get_product_labels( $product_id = '' ) {
 
     return $output;
 }
+
+// **********************************************************************// 
+// ! Is product New
+// **********************************************************************// 
+
+function etheme_product_is_new() {
+  // Overrides Legenda function
+  // Check if $var has been within the last month. (sec * min * hours * days)
+  // Days is set in Theme Options
+  $days = etheme_get_option('new_icon_timeout');
+  if((time()-(60*60*24*$days)) < strtotime(get_the_date())) {
+    return true;
+  }
+  return false;
+}
+
+// Adds the option to change this value in Theme Functions
+function adelman_add_new_icon_timeout() {
+  if ( is_admin() && function_exists( 'ot_register_settings' ) ) {
+    $saved_settings = get_option('option_tree_settings');
+    $custom_settings = $saved_settings;
+    $settings = $saved_settings['settings'];
+
+    $new_icon_timeout = array(
+      'id'          => 'new_icon_timeout',
+      'label'       => __('"NEW" label number of days', ETHEME_DOMAIN),
+      'desc'        => __('<b>Example: </b> 60', ETHEME_DOMAIN),
+      'type'        => 'text',
+      'section'     => 'shop',
+      'default'     => 60
+    );
+
+    // Insert the New timeout to appear after the enable switch
+    for ($i = 0; $i < count($settings); $i++){
+      if ($settings[$i]['id'] == 'new_icon') {
+        array_splice($settings, $i + 1, 0, array($new_icon_timeout));
+      }
+    }
+
+    $custom_settings['settings'] = $settings;
+
+    if(is_array($settings)){
+      foreach($settings as $key => $value){
+        $defaults[$value['id']] = $value['default'];
+      }
+    }
+
+    add_option( 'option_tree', $defaults ); // update_option  add_option
+
+    /* settings are not the same update the DB */
+    if ( $saved_settings !== $custom_settings ) {
+      update_option( 'option_tree_settings', $custom_settings );
+    }
+  }
+}
+add_action( 'init', 'adelman_add_new_icon_timeout' );
 
 
 // **********************************************************************// 

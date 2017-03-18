@@ -30,36 +30,8 @@
 						global $product;
 
 						// Combined original and limited edition works
-						$args = apply_filters('woocommerce_related_products_args', array(
-							'relation' => 'AND',
-							'post_type' => 'product',
-							'post_status' => 'publish',
-							'ignore_sticky_posts'	=> 1,
-							'no_found_rows' => 1,
-							'posts_per_page' => 100,
-							'post__not_in' => array($product->id),
-							'meta_query' => array(
-								array(
-									'relation' => 'AND',
-									'sold_clause' => array(
-								    'key' => '_stock_status'
-									),
-									'new_clause' => array(
-								    'key' => 'product_new'
-									),
-									'provider_clause' => array(
-										'key' => 'provider',
-										'value' => '"' . get_the_ID() . '"',
-										'compare' => 'LIKE',	
-									)
-								)
-							),
-							'orderby' => array(
-								'sold_clause' => 'ASC',
-								'new_clause' => 'DESC'
-							)
-						));
-
+						$args = adelman_get_slider_args_for_provider(get_the_ID(), $product->id);
+						
 						$slider_args = array(
 							'title' => 'Artist Work',
 							'shop_link' => false,

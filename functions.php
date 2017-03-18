@@ -440,7 +440,7 @@ class iWC_Orderby_Stock_Status {
     global $wpdb, $post;
     // only change query on WooCommerce loops
     $post_type = get_post_type( $post->ID );
-    $valid_post_type = ($post_type === 'artist' || $post_type === 'jeweler');
+    $valid_post_type = ($post_type === 'artist' || $post_type === 'jeweler'); // CPTs are currently handled via adelman_get_slider_args_for_provider
     if (!is_admin() && (is_woocommerce() && (is_shop() || is_product_category() || is_product_tag() || $valid_post_type))) {
       $posts_clauses['join'] .= " INNER JOIN $wpdb->postmeta istockstatus ON ($wpdb->posts.ID = istockstatus.post_id) ";
       $posts_clauses['orderby'] = " istockstatus.meta_value ASC, " . $posts_clauses['orderby'];
@@ -450,6 +450,40 @@ class iWC_Orderby_Stock_Status {
   }
 }
 new iWC_Orderby_Stock_Status;
+
+
+// **********************************************************************// 
+// ! Sort Products Order for Artist CPT and related.php
+// **********************************************************************//
+
+
+function adelman_get_slider_args_for_provider($provider_id, $product_id) {
+  return apply_filters('woocommerce_related_products_args', array(
+    'post_type' => 'product',
+    'post_status' => 'publish',
+    'ignore_sticky_posts' => 1,
+    'no_found_rows' => 1,
+    'posts_per_page' => 30,
+    'post__not_in' => array($product_id),
+    'meta_query' => array(
+      array(
+        'relation' => 'AND',
+        'sold_clause' => array(
+          'key' => '_stock_status'
+        ),
+        'provider_clause' => array(
+          'key' => 'provider',
+          'value' => '"' . $provider_id . '"',
+          'compare' => 'LIKE',  
+        )
+      )
+    ),
+    'orderby' => array(
+      'sold_clause' => 'ASC',
+      'date' => 'DESC'
+    )
+  ));
+}
 
 
 // **********************************************************************// 

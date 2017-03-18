@@ -438,10 +438,8 @@ class iWC_Orderby_Stock_Status {
 
   public function order_by_stock_status($posts_clauses) {
     global $wpdb, $post;
-    // only change query on WooCommerce loops
-    $post_type = get_post_type( $post->ID );
-    $valid_post_type = ($post_type === 'artist' || $post_type === 'jeweler'); // CPTs are currently handled via adelman_get_slider_args_for_provider
-    if (!is_admin() && (is_woocommerce() && (is_shop() || is_product_category() || is_product_tag() || $valid_post_type))) {
+    // only change query on WooCommerce loops on the front end
+    if (!is_admin() && (is_woocommerce() && (is_shop() || is_product_category() || is_product_tag()))) {
       $posts_clauses['join'] .= " INNER JOIN $wpdb->postmeta istockstatus ON ($wpdb->posts.ID = istockstatus.post_id) ";
       $posts_clauses['orderby'] = " istockstatus.meta_value ASC, " . $posts_clauses['orderby'];
       $posts_clauses['where'] = " AND istockstatus.meta_key = '_stock_status' AND istockstatus.meta_value <> '' " . $posts_clauses['where'];
@@ -457,13 +455,13 @@ new iWC_Orderby_Stock_Status;
 // **********************************************************************//
 
 
-function adelman_get_slider_args_for_provider($provider_id, $product_id) {
+function adelman_get_slider_args_for_provider($provider_id, $product_id, $num_items = -1) {
   return apply_filters('woocommerce_related_products_args', array(
     'post_type' => 'product',
     'post_status' => 'publish',
     'ignore_sticky_posts' => 1,
     'no_found_rows' => 1,
-    'posts_per_page' => 30,
+    'posts_per_page' => $num_items,
     'post__not_in' => array($product_id),
     'meta_query' => array(
       array(

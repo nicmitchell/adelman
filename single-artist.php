@@ -30,7 +30,7 @@
 						global $product;
 
 						// Combined original and limited edition works
-						$args = adelman_get_slider_args_for_provider(get_the_ID(), $product->id);
+						$args = adelman_get_slider_args_for_provider(get_the_ID(), $product->id, -1);
 						
 						$slider_args = array(
 							'title' => 'Artist Work',

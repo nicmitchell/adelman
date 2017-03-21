@@ -396,6 +396,7 @@ html {
 
 .products-grid .product img.main-image, .slide-item.product-slide.grid-slide img.main-image {
   max-height: 200px;
+  min-height: 200px;
 }
 
 /* Hide quick view on tablet and mobile */

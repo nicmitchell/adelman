@@ -178,122 +178,125 @@ if(!function_exists('etheme_get_single_product_sidebar')) {
 // **********************************************************************// 
 // ! Create products slider by args
 // **********************************************************************//
-if(!function_exists('etheme_create_slider')) {
-  function etheme_create_slider($args, $slider_args = array()){//, $title = false, $shop_link = true, $slider_type = false, $items = '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]', $style = 'default'
-    global $wpdb, $woocommerce_loop;
-    $product_per_row = etheme_get_option('prodcuts_per_row');
-    extract(shortcode_atts(array( 
-      'title' => false,
-      'shop_link' => false,
-      'slider_type' => false,
-      'items' => '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]',
-      'style' => 'default',
-      'block_id' => false
-    ), $slider_args));
+
+function etheme_create_slider($args, $slider_args = array()){
+//, $title = false, $shop_link = true, $slider_type = false, $items = '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]', $style = 'default'
+  global $wpdb, $woocommerce_loop, $create_slider;
+  $create_slider = true;
+
+  $product_per_row = etheme_get_option('prodcuts_per_row');
+  extract(shortcode_atts(array( 
+    'title' => false,
+    'shop_link' => false,
+    'slider_type' => false,
+    'items' => '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]',
+    'style' => 'default',
+    'block_id' => false
+  ), $slider_args));
+
+    $box_id = rand(1000,10000);
+    $multislides = new WP_Query( $args );
+    $shop_url = get_permalink(woocommerce_get_page_id('shop'));
+    $class = $title_output = '';
+    if(!$slider_type) {
+      $woocommerce_loop['lazy-load'] = true;
+      $woocommerce_loop['style'] = $style;
+    }
     
-      $box_id = rand(1000,10000);
-      $multislides = new WP_Query( $args );
-      $shop_url = get_permalink(woocommerce_get_page_id('shop'));
-      $class = $title_output = '';
-      if(!$slider_type) {
-        $woocommerce_loop['lazy-load'] = true;
-        $woocommerce_loop['style'] = $style;
-      }
-      
-      if($multislides->post_count > 1) {
-          $class .= ' posts-count-gt1';
-      }
-      if($multislides->post_count < 4) {
-          $class .= ' posts-count-lt4';
-      }
-      if ( $multislides->have_posts() ) :
-          if ($title) {
-              $title_output = '<h2 class="title"><span>'.$title.'</span></h2>';
-          }   
-            echo '<div class="slider-container '.$class.'">';
-                echo $title_output;
-                if($shop_link && $title)
-                  echo '<a href="'.$shop_url.'" class="show-all-posts hidden-tablet hidden-phone">'.__('View more products', ETHEME_DOMAIN).'</a>';
-                echo '<div class="items-slider products-slider '.$slider_type.'-container slider-'.$box_id.'">';
-                      echo '<div class="slider '.$slider_type.'-wrapper">';
-                      $_i=0;
-                        if($block_id && $block_id != '' && et_get_block($block_id) != '') {
-                            echo '<div class=" '.$slider_type.'-slide">';
-                                echo et_get_block($block_id);
-                            echo '</div><!-- slide-item -->';
-                        }
-                          while ($multislides->have_posts()) : $multislides->the_post();
-                              $_i++;
-                              
-                              if(class_exists('Woocommerce')) {
-                                  global $product;
-                                  if (!$product->is_visible()) continue; 
-                                  echo '<div class="slide-item product-slide '.$slider_type.'-slide">';
-                                      woocommerce_get_template_part( 'content', 'product' );
-                                  echo '</div><!-- slide-item -->';
-                              }
+    if($multislides->post_count > 1) {
+        $class .= ' posts-count-gt1';
+    }
+    if($multislides->post_count < 4) {
+        $class .= ' posts-count-lt4';
+    }
+    if ( $multislides->have_posts() ) :
+        if ($title) {
+            $title_output = '<h2 class="title"><span>'.$title.'</span></h2>';
+        }   
+          echo '<div class="slider-container '.$class.'">';
+              echo $title_output;
+              if($shop_link && $title)
+                echo '<a href="'.$shop_url.'" class="show-all-posts hidden-tablet hidden-phone">'.__('View more products', ETHEME_DOMAIN).'</a>';
+              echo '<div class="items-slider products-slider '.$slider_type.'-container slider-'.$box_id.'">';
+                    echo '<div class="slider '.$slider_type.'-wrapper">';
+                    $_i=0;
+                      if($block_id && $block_id != '' && et_get_block($block_id) != '') {
+                          echo '<div class=" '.$slider_type.'-slide">';
+                              echo et_get_block($block_id);
+                          echo '</div><!-- slide-item -->';
+                      }
+                        while ($multislides->have_posts()) : $multislides->the_post();
+                            $_i++;
+                            
+                            if(class_exists('Woocommerce')) {
+                                global $product;
+                                if (!$product->is_visible()) continue; 
+                                echo '<div class="slide-item product-slide '.$slider_type.'-slide">';
+                                    woocommerce_get_template_part( 'content', 'product' );
+                                echo '</div><!-- slide-item -->';
+                            }
 
-                          endwhile; 
-                      echo '</div><!-- slider -->'; 
-                echo '</div><!-- products-slider -->'; 
-            echo '</div><!-- slider-container -->'; 
-      endif;
-      wp_reset_query();
-      unset($woocommerce_loop['lazy-load']);
-      unset($woocommerce_loop['style']);
-      
-      if(!$slider_type) {
-        echo '
+                        endwhile; 
+                    echo '</div><!-- slider -->'; 
+              echo '</div><!-- products-slider -->'; 
+          echo '</div><!-- slider-container -->'; 
+    endif;
+    wp_reset_query();
+    unset($woocommerce_loop['lazy-load']);
+    unset($woocommerce_loop['style']);
+    
+    if(!$slider_type) {
+      echo '
 
-            <script type="text/javascript">
-                jQuery(".slider-'.$box_id.' .slider").owlCarousel({
-                    items: 4, 
-                    lazyLoad : true,
-                    navigation: true,
-                    navigationText:false,
-                    rewindNav: false,
-                    itemsCustom: '.$items.'
-                });
+          <script type="text/javascript">
+              jQuery(".slider-'.$box_id.' .slider").owlCarousel({
+                  items: 4, 
+                  lazyLoad : true,
+                  navigation: true,
+                  navigationText:false,
+                  rewindNav: false,
+                  itemsCustom: '.$items.'
+              });
 
-            </script>
-        ';
-      } elseif($slider_type == 'swiper') {
-        echo '
+          </script>
+      ';
+    } elseif($slider_type == 'swiper') {
+      echo '
 
-            <script type="text/javascript">
-              if(jQuery(window).width() > 767) {
-                jQuery(".slider-'.$box_id.'").etFullWidth();
-          var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
-          keyboardControl: true,
-          centeredSlides: true,
-          calculateHeight : true,
-          slidesPerView: "auto"
-          })
-              } else {
-          var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
-          calculateHeight : true
-          })
-              }
-
-          jQuery(function($){
-          $(".slider-'.$box_id.' .slide-item").click(function(){
-            mySwiper'.$box_id.'.swipeTo($(this).index());
-            $(".lookbook-index").removeClass("active");
-            $(this).addClass("active");
-          });
-          
-          $(".slider-'.$box_id.' .slide-item a").click(function(e){
-            if($(this).parents(".swiper-slide-active").length < 1) {
-              e.preventDefault();
+          <script type="text/javascript">
+            if(jQuery(window).width() > 767) {
+              jQuery(".slider-'.$box_id.'").etFullWidth();
+        var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
+        keyboardControl: true,
+        centeredSlides: true,
+        calculateHeight : true,
+        slidesPerView: "auto"
+        })
+            } else {
+        var mySwiper'.$box_id.' = new Swiper(".slider-'.$box_id.'",{
+        calculateHeight : true
+        })
             }
-          });
-          }, jQuery);
-            </script>
-        ';
-      }
-          
-  }
+
+        jQuery(function($){
+        $(".slider-'.$box_id.' .slide-item").click(function(){
+          mySwiper'.$box_id.'.swipeTo($(this).index());
+          $(".lookbook-index").removeClass("active");
+          $(this).addClass("active");
+        });
+        
+        $(".slider-'.$box_id.' .slide-item a").click(function(e){
+          if($(this).parents(".swiper-slide-active").length < 1) {
+            e.preventDefault();
+          }
+        });
+        }, jQuery);
+          </script>
+      ';
+    }
+        
 }
+
 
 
 // **********************************************************************// 
@@ -349,69 +352,69 @@ add_filter( 'parse_query', 'adelman_featured_products_admin_filter_query' );
 // ! Sold Out Products Order Shortcode (Home Page)
 // **********************************************************************// 
 /**
-   * shortcode function.
-   *
-   * @access public
-   * @return string
-   */
-  function sold_out_products_shortcode( $atts ) {
-    global $woocommerce_loop, $woocommerce, $sold_out_shortcode_used;
-    $sold_out_shortcode_used = true;
+ * shortcode function.
+ *
+ * @access public
+ * @return string
+ */
+function sold_out_products_shortcode( $atts ) {
+  global $woocommerce_loop, $woocommerce, $sold_out_shortcode_used;
+  $sold_out_shortcode_used = true;
 
-    extract( shortcode_atts( array(
-      'per_page'  => '12',
-      'columns'   => '4',
-      'orderby' => 'meta_value_num',
-      'order' => 'desc'
-    ), $atts) );
+  extract( shortcode_atts( array(
+    'per_page'  => '12',
+    'columns'   => '4',
+    'orderby' => 'meta_value_num',
+    'order' => 'desc'
+  ), $atts) );
 
-    $meta_query = array();
-    $meta_query[] = array(
-      'key'     => '_visibility',
-      'value'   => array( 'visible', 'catalog' ),
-      'compare' => 'IN'
-    );
-    $meta_query[] = array(
-      'key'     => '_stock_status',
-      'value'   => 'outofstock',
-      'compare'   => '='
-    );
+  $meta_query = array();
+  $meta_query[] = array(
+    'key'     => '_visibility',
+    'value'   => array( 'visible', 'catalog' ),
+    'compare' => 'IN'
+  );
+  $meta_query[] = array(
+    'key'     => '_stock_status',
+    'value'   => 'outofstock',
+    'compare'   => '='
+  );
 
-    $args = array(
-      'post_type' => 'product',
-      'post_status' => 'publish',
-      'ignore_sticky_posts' => 1,
-      'posts_per_page' => $per_page,
-      'orderby' => $orderby,
-      'order' => $order,
-      'meta_key' => 'sold_date',
-      'meta_query' => $meta_query
-    );
+  $args = array(
+    'post_type' => 'product',
+    'post_status' => 'publish',
+    'ignore_sticky_posts' => 1,
+    'posts_per_page' => $per_page,
+    'orderby' => $orderby,
+    'order' => $order,
+    'meta_key' => 'sold_date',
+    'meta_query' => $meta_query
+  );
 
-    ob_start();
+  ob_start();
 
-    $products = new WP_Query( $args );
+  $products = new WP_Query( $args );
 
-    $woocommerce_loop['columns'] = $columns;
+  $woocommerce_loop['columns'] = $columns;
 
-    if ( $products->have_posts() ) : ?>
+  if ( $products->have_posts() ) : ?>
 
-      <?php woocommerce_product_loop_start(); ?>
+    <?php woocommerce_product_loop_start(); ?>
 
-        <?php while ( $products->have_posts() ) : $products->the_post(); ?>
+      <?php while ( $products->have_posts() ) : $products->the_post(); ?>
 
-          <?php woocommerce_get_template_part( 'content', 'product' ); ?>
+        <?php woocommerce_get_template_part( 'content', 'product' ); ?>
 
-        <?php endwhile; // end of the loop. ?>
+      <?php endwhile; // end of the loop. ?>
 
-      <?php woocommerce_product_loop_end(); ?>
+    <?php woocommerce_product_loop_end(); ?>
 
-    <?php endif;
+  <?php endif;
 
-    wp_reset_postdata();
+  wp_reset_postdata();
 
-    return '<div class="woocommerce">' . ob_get_clean() . '</div>';
-  }
+  return '<div class="woocommerce">' . ob_get_clean() . '</div>';
+}
 
 add_shortcode( 'sold_out_products', 'sold_out_products_shortcode' );
 
@@ -420,13 +423,7 @@ add_shortcode( 'sold_out_products', 'sold_out_products_shortcode' );
 // **********************************************************************// 
 // Order product collections by stock status, in-stock products first.
 // http://stackoverflow.com/questions/25113581/show-out-of-stock-products-at-the-end-in-woocommerce
-
-// TODO: 
-// - Use pre_get_posts 
-// - Display in following order:
-//   1 New available artwork first (with the "New" label, meta_key: 'product_new')
-//   2 Non-new available work
-//   3 All solds last
+// Pre-get posts does not seem to work for related.php, because the Query object has already been created.
 
 class iWC_Orderby_Stock_Status {
   public function __construct(){
@@ -437,9 +434,11 @@ class iWC_Orderby_Stock_Status {
   }
 
   public function order_by_stock_status($posts_clauses) {
-    global $wpdb, $post;
-    // only change query on WooCommerce loops on the front end
-    if (!is_admin() && (is_woocommerce() && (is_shop() || is_product_category() || is_product_tag()))) {
+    global $wpdb, $post, $create_slider;
+    $post_type = get_post_type();
+    $valid_post_type = ($post_type === 'artist' || $post_type === 'jeweler');
+
+    if (!is_admin() && ((is_shop() || is_product_category() || is_product_tag()) || $valid_post_type || $create_slider)) {
       $posts_clauses['join'] .= " INNER JOIN $wpdb->postmeta istockstatus ON ($wpdb->posts.ID = istockstatus.post_id) ";
       $posts_clauses['orderby'] = " istockstatus.meta_value ASC, " . $posts_clauses['orderby'];
       $posts_clauses['where'] = " AND istockstatus.meta_key = '_stock_status' AND istockstatus.meta_value <> '' " . $posts_clauses['where'];
@@ -450,12 +449,11 @@ class iWC_Orderby_Stock_Status {
 new iWC_Orderby_Stock_Status;
 
 
-// **********************************************************************// 
-// ! Sort Products Order for Artist CPT and related.php
+// **********************************************************************//
+// ! Abstract Related Products Params
 // **********************************************************************//
 
-
-function adelman_get_slider_args_for_provider($provider_id, $product_id, $num_items = -1) {
+function adelman_get_slider_args_for_provider($provider_id, $product_id = -1, $num_items = -1) {
   return apply_filters('woocommerce_related_products_args', array(
     'post_type' => 'product',
     'post_status' => 'publish',

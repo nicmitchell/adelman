@@ -394,9 +394,16 @@ html {
   margin-bottom: 20px;
 }
 
+/* Force sizing of images to prevent grid sticking */
 .products-grid .product img.main-image, .slide-item.product-slide.grid-slide img.main-image {
   max-height: 200px;
-  min-height: 200px;
+  min-height: 168px;
+  min-width: 168px;
+}
+
+/* Keep New labels from drifting too far to the right */
+.slide-item .product .product-image-wrapper, .products-grid .product .product-image-wrapper {
+  max-width: 200px;
 }
 
 /* Hide quick view on tablet and mobile */

@@ -36,6 +36,13 @@ add_action('admin_enqueue_scripts', 'adelman_admin_theme_style');
 // Hide SEO columns
 add_filter( 'wpseo_use_page_analysis', '__return_false' );
 
+// Fix font-awesome enqueuing in Legenda
+function adelman_font_awesome() {
+  wp_dequeue_style('et-font-awesome');
+  wp_deregister_style('et-font-awesome');
+  wp_enqueue_style('et-font-awesome', get_template_directory_uri().'/css/font-awesome.css', array());
+}
+add_action( 'wp_enqueue_scripts', 'adelman_font_awesome' );
 
 
 // **********************************************************************// 

@@ -188,24 +188,20 @@ if(!function_exists('etheme_get_single_product_sidebar')) {
 
 function etheme_create_slider($args, $slider_args = array()){
 //, $title = false, $shop_link = true, $slider_type = false, $items = '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]', $style = 'default'
-  global $wpdb, $woocommerce_loop, $create_slider;
+  global $wpdb, $woocommerce_loop;
 
   $product_per_row = etheme_get_option('prodcuts_per_row');
   extract(shortcode_atts(array( 
     'title' => false,
     'shop_link' => false,
     'slider_type' => false,
-    'items' => '[[0, 1], [479,2], [619,2], [768,4],  [1200, 4], [1600, 4]]',
+    'items' => '[[0, 1], [479,2], [619,2], [768,4],  [1200, 6], [1600, 6]]',
     'style' => 'default',
     'block_id' => false
   ), $slider_args));
 
     $box_id = rand(1000,10000);
-    
-    $create_slider = true;
     $multislides = new WP_Query( $args );
-    $create_slider = false;
-
     $shop_url = get_permalink(woocommerce_get_page_id('shop'));
     $class = $title_output = '';
     if(!$slider_type) {
@@ -444,11 +440,10 @@ class iWC_Orderby_Stock_Status {
   }
 
   public function order_by_stock_status($posts_clauses) {
-    global $wpdb, $post, $create_slider;
-    $post_type = get_post_type();
-    $valid_post_type = ($post_type === 'artist' || $post_type === 'jeweler');
-
-    if (!is_admin() && (is_woocommerce() && (is_shop() || is_product_category() || is_product_tag()) || $create_slider)) {
+    global $wpdb, $post;
+    // If the clause is querying for post_type = 'product', sort the solds to the back
+    $where_clause = str_replace(' ', '', $posts_clauses['where']);
+    if(preg_match("/_posts\.post_type='product'/", $where_clause)) {
       $posts_clauses['join'] .= " INNER JOIN $wpdb->postmeta istockstatus ON ($wpdb->posts.ID = istockstatus.post_id) ";
       $posts_clauses['orderby'] = " istockstatus.meta_value ASC, " . $posts_clauses['orderby'];
       $posts_clauses['where'] = " AND istockstatus.meta_key = '_stock_status' AND istockstatus.meta_value <> '' " . $posts_clauses['where'];
@@ -472,21 +467,11 @@ function adelman_get_slider_args_for_provider($provider_id, $product_id = -1, $n
     'posts_per_page' => $num_items,
     'post__not_in' => array($product_id),
     'meta_query' => array(
-      array(
-        'relation' => 'AND',
-        'sold_clause' => array(
-          'key' => '_stock_status'
-        ),
-        'provider_clause' => array(
-          'key' => 'provider',
-          'value' => '"' . $provider_id . '"',
-          'compare' => 'LIKE',  
-        )
+      'provider_clause' => array(
+        'key' => 'provider',
+        'value' => '"' . $provider_id . '"',
+        'compare' => 'LIKE',  
       )
-    ),
-    'orderby' => array(
-      'sold_clause' => 'ASC',
-      'date' => 'DESC'
     )
   ));
 }

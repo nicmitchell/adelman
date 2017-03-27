@@ -401,6 +401,11 @@ html {
   min-width: 168px;
 }
 
+.artist-template-default .products-grid .product img.main-image, .slide-item.product-slide.grid-slide img.main-image {
+  min-height: 200px;
+  min-width: 200px;
+}
+
 /* Keep New labels from drifting too far to the right */
 .slide-item .product .product-image-wrapper, .products-grid .product .product-image-wrapper {
   max-width: 200px;

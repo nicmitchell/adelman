@@ -581,3 +581,57 @@ function adelman_add_new_icon_timeout() {
   }
 }
 add_action( 'init', 'adelman_add_new_icon_timeout' );
+
+// **********************************************************************// 
+// ! Auction Stuff (Cron jobs)
+// **********************************************************************//
+
+// Every day
+function adelman_auction_cron_mail(){
+  adelman_ping_url( get_site_url(null, '/?auction-cron=mails', 'https') );
+}
+add_action( 'adelman_auction_cron_mail', 'adelman_auction_cron_mail' );
+
+// Every minute
+function adelman_auction_cron_check(){
+  adelman_ping_url( get_site_url(null, '/?auction-cron=check', 'https') );
+}
+add_action( 'adelman_auction_cron_check', 'adelman_auction_cron_check' );
+
+// Every hour
+function adelman_auction_cron_relist(){
+  adelman_ping_url( get_site_url(null, '/?auction-cron=relist', 'https') );
+}
+add_action( 'adelman_auction_cron_relist', 'adelman_auction_cron_relist' );
+
+
+function adelman_ping_url($url = NULL) {
+  if($url == NULL) {
+    return false;
+  }
+  
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  $data = curl_exec($ch);
+  $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch); 
+  
+  if( $httpcode >= 200 && $httpcode < 300) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+if ( !function_exists('write_log') ) {
+  function write_log ( $log )  {
+    if ( is_array( $log ) || is_object( $log ) ) {
+      error_log( print_r( $log, true ) );
+    } else {
+      error_log( $log );
+    }
+  }
+}
+

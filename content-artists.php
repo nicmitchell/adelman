@@ -15,7 +15,7 @@
 		</header>
 		<div class="post-images main-image">
 			<a href="<?php the_permalink(); ?>">
-				<?php the_post_thumbnail(); ?>
+				<?php the_post_thumbnail('adelman_artist_image'); ?>
 			</a>
 		</div>	
 	</article>

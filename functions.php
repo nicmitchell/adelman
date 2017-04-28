@@ -85,6 +85,8 @@ add_action('init', 'cptui_register_my_cpt_artist');
   ); 
 }
 
+add_image_size( 'adelman_artist_image', 370, 370, true);
+
 add_action('init', 'cptui_register_my_cpt_jeweler');
   function cptui_register_my_cpt_jeweler() {
     register_post_type('jeweler', array(

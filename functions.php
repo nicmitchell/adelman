@@ -241,7 +241,7 @@ function etheme_create_slider($args, $slider_args = array()){
                                 global $product;
                                 if (!$product->is_visible()) continue; 
                                 echo '<div class="slide-item product-slide '.$slider_type.'-slide">';
-                                    woocommerce_get_template_part( 'content', 'product' );
+                                    wc_get_template_part( 'content', 'product' );
                                 echo '</div><!-- slide-item -->';
                             }
 
@@ -412,7 +412,7 @@ function sold_out_products_shortcode( $atts ) {
 
       <?php while ( $products->have_posts() ) : $products->the_post(); ?>
 
-        <?php woocommerce_get_template_part( 'content', 'product' ); ?>
+        <?php wc_get_template_part( 'content', 'product' ); ?>
 
       <?php endwhile; // end of the loop. ?>
 

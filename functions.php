@@ -205,7 +205,7 @@ function etheme_create_slider($args, $slider_args = array()){
 
     $box_id = rand(1000,10000);
     $multislides = new WP_Query( $args );
-    $shop_url = get_permalink(woocommerce_get_page_id('shop'));
+    $shop_url = get_permalink(wc_get_page_id('shop'));
     $class = $title_output = '';
     if(!$slider_type) {
       $woocommerce_loop['lazy-load'] = true;

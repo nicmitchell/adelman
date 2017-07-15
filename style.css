@@ -494,6 +494,11 @@ figure.artist-thumbnail:last-child {
   color: #6f6f6f !important;
 }
 
+/* Hide SKU on single product */
+.single-product-page .product-info .sku_wrapper {
+  display: none;
+}
+
 /* Submenu height */
 .fixed-header .menu > li .nav-sublist-dropdown .container > ul > li a, .main-nav .menu > li .nav-sublist-dropdown .container > ul > li a { padding: 5px 20px !important; }
 

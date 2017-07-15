@@ -64,14 +64,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<span class="short_description_meta">Version: <?php echo $version_short; ?></span>
 			<?php endif; ?>
 
-			<?php $dimensions = $product->get_dimensions(); ?>
+			<?php $dimensions = $product->get_dimensions(true); ?>
 			<?php if ($dimensions): ?>
 				<span class="short_description_meta">Dimensions: <?php echo $dimensions; ?></span>
 			<?php endif; ?>
 			
 			<?php
 				$size = sizeof( get_the_terms( $post->ID, 'product_cat' ) );
-				echo $product->get_categories( ', ', '<span class="short_description_meta">' . _n( 'Category:', 'Categories:', $size, 'woocommerce' ) . ' ', '</span>' );
+				echo wc_get_product_category_list( ', ', '<span class="short_description_meta">' . _n( 'Category:', 'Categories:', $size, 'woocommerce' ) . ' ', '</span>' );
 			?>
 			
 			<?php

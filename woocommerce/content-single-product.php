@@ -64,9 +64,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<span class="short_description_meta">Version: <?php echo $version_short; ?></span>
 			<?php endif; ?>
 
-			<?php $dimensions = $product->get_dimensions(true); ?>
+			<?php $dimensions = $product->get_dimensions(false); ?>
 			<?php if ($dimensions): ?>
-				<span class="short_description_meta">Dimensions: <?php echo $dimensions; ?></span>
+				<span class="short_description_meta">Dimensions: <?php echo wc_format_dimensions($dimensions); ?></span>
 			<?php endif; ?>
 			
 			<?php

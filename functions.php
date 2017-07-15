@@ -121,6 +121,7 @@ add_action('init', 'cptui_register_my_cpt_jeweler');
   ); 
 }
 
+
 // **********************************************************************// 
 // ! Set the number of items on 'Artist' archive page to show all
 // **********************************************************************// 
@@ -637,3 +638,315 @@ if ( !function_exists('write_log') ) {
   }
 }
 
+
+
+// **********************************************************************// 
+// ! ACF Fields
+// **********************************************************************// 
+if(function_exists("register_field_group"))
+{
+  register_field_group(array (
+    'id' => 'acf_jeweler-categories',
+    'title' => 'Jeweler Categories',
+    'fields' => array (
+      array (
+        'key' => 'field_54ea44a4a23d4',
+        'label' => 'Womens',
+        'name' => '',
+        'type' => 'tab',
+      ),
+      array (
+        'key' => 'field_54ea4582a23dc',
+        'label' => 'Anklets',
+        'name' => 'anklets_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea4458a23d3',
+        'label' => 'Bangles',
+        'name' => 'bangles_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea400f445de',
+        'label' => 'Bracelets',
+        'name' => 'bracelets_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea4447a23d2',
+        'label' => 'Cuffs',
+        'name' => 'cuffs_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea43cfa23cf',
+        'label' => 'Earrings',
+        'name' => 'earrings_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea43eda23d0',
+        'label' => 'Necklaces',
+        'name' => 'necklaces_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea4435a23d1',
+        'label' => 'Rings',
+        'name' => 'rings_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea455ca23db',
+        'label' => 'Watches',
+        'name' => 'watches_womens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea44bfa23d5',
+        'label' => 'Mens',
+        'name' => '',
+        'type' => 'tab',
+      ),
+      array (
+        'key' => 'field_54ea453aa23da',
+        'label' => 'Bracelets',
+        'name' => 'bracelets_mens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea44cba23d6',
+        'label' => 'Cufflinks',
+        'name' => 'cufflinks_mens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea4520a23d9',
+        'label' => 'Necklaces',
+        'name' => 'necklaces_mens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea44d9a23d7',
+        'label' => 'Rings',
+        'name' => 'rings_mens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+      array (
+        'key' => 'field_54ea44e4a23d8',
+        'label' => 'Watches',
+        'name' => 'watches_mens',
+        'type' => 'image',
+        'save_format' => 'object',
+        'preview_size' => 'thumbnail',
+        'library' => 'all',
+      ),
+    ),
+    'location' => array (
+      array (
+        array (
+          'param' => 'post_type',
+          'operator' => '==',
+          'value' => 'jeweler',
+          'order_no' => 0,
+          'group_no' => 0,
+        ),
+      ),
+    ),
+    'options' => array (
+      'position' => 'normal',
+      'layout' => 'no_box',
+      'hide_on_screen' => array (
+      ),
+    ),
+    'menu_order' => 0,
+  ));
+  register_field_group(array (
+    'id' => 'acf_artist-linked-product',
+    'title' => 'Artist Linked Product',
+    'fields' => array (
+      array (
+        'key' => 'field_543f2a6d5c1c2',
+        'label' => 'Linked Product',
+        'name' => 'linked_product',
+        'type' => 'relationship',
+        'instructions' => 'Select a product to link to from the Artists page',
+        'return_format' => 'object',
+        'post_type' => array (
+          0 => 'product',
+        ),
+        'taxonomy' => array (
+          0 => 'product_cat:631',
+          1 => 'product_cat:632',
+          2 => 'product_cat:33',
+          3 => 'product_cat:34',
+          4 => 'product_cat:629',
+          5 => 'product_cat:620',
+          6 => 'product_cat:627',
+          7 => 'product_cat:30',
+          8 => 'product_cat:863',
+          9 => 'product_cat:358',
+          10 => 'product_cat:367',
+          11 => 'product_cat:621',
+          12 => 'product_cat:27',
+          13 => 'product_cat:624',
+          14 => 'product_cat:920',
+          15 => 'product_cat:355',
+          16 => 'product_cat:596',
+          17 => 'product_cat:957',
+          18 => 'product_cat:31',
+        ),
+        'filters' => array (
+          0 => 'search',
+        ),
+        'result_elements' => array (
+          0 => 'featured_image',
+          1 => 'post_title',
+        ),
+        'max' => 1,
+      ),
+    ),
+    'location' => array (
+      array (
+        array (
+          'param' => 'post_type',
+          'operator' => '==',
+          'value' => 'artist',
+          'order_no' => 0,
+          'group_no' => 0,
+        ),
+      ),
+    ),
+    'options' => array (
+      'position' => 'normal',
+      'layout' => 'no_box',
+      'hide_on_screen' => array (
+      ),
+    ),
+    'menu_order' => 0,
+  ));
+  register_field_group(array (
+    'id' => 'acf_artists-jewelers',
+    'title' => 'Artists / Jewelers',
+    'fields' => array (
+      array (
+        'key' => 'field_54419fc095e12',
+        'label' => 'Orientation',
+        'name' => 'orientation',
+        'type' => 'radio',
+        'choices' => array (
+          'landscape' => 'Landscape',
+          'portrait' => 'Portrait',
+        ),
+        'other_choice' => 0,
+        'save_other_choice' => 0,
+        'default_value' => 'portrait',
+        'layout' => 'horizontal',
+      ),
+      array (
+        'key' => 'field_556be0a1bb87a',
+        'label' => 'Sold Date',
+        'name' => 'sold_date',
+        'type' => 'date_picker',
+        'date_format' => 'yymmdd',
+        'display_format' => 'mm/dd/yy',
+        'first_day' => 1,
+      ),
+      array (
+        'key' => 'field_56495fb52a2b9',
+        'label' => 'Reserved',
+        'name' => 'reserved',
+        'type' => 'true_false',
+        'message' => '',
+        'default_value' => 0,
+      ),
+      array (
+        'key' => 'field_5439a64f0333e',
+        'label' => 'Provider',
+        'name' => 'provider',
+        'type' => 'relationship',
+        'return_format' => 'object',
+        'post_type' => array (
+          0 => 'artist',
+          1 => 'jeweler',
+        ),
+        'taxonomy' => array (
+          0 => 'all',
+        ),
+        'filters' => array (
+          0 => 'search',
+          1 => 'post_type',
+        ),
+        'result_elements' => array (
+          0 => 'post_type',
+          1 => 'post_title',
+        ),
+        'max' => 1,
+      ),
+    ),
+    'location' => array (
+      array (
+        array (
+          'param' => 'post_type',
+          'operator' => '==',
+          'value' => 'product',
+          'order_no' => 0,
+          'group_no' => 0,
+        ),
+      ),
+    ),
+    'options' => array (
+      'position' => 'normal',
+      'layout' => 'no_box',
+      'hide_on_screen' => array (
+        0 => 'the_content',
+        1 => 'custom_fields',
+        2 => 'comments',
+        3 => 'revisions',
+        4 => 'slug',
+        5 => 'author',
+        6 => 'format',
+        7 => 'tags',
+        8 => 'send-trackbacks',
+      ),
+    ),
+    'menu_order' => 0,
+  ));
+}

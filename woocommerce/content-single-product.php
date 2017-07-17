@@ -55,18 +55,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<h4><?php _e('Product Information', ETHEME_DOMAIN) ?></h4>
 				
 				<?php woocommerce_template_single_rating(); ?>
-				<?php /* May be able to hook into woocommerce_template_single_rating */ ?>
-				<span class="artist_name_wrapper"><?php adelman_product_artist(); ?></span>
-				
-				<?php $version_short = $product->get_attribute( 'pa_version-short' ); ?>
-				<?php if($version_short): ?>
-					<span class="short_description_meta">Version: <?php echo $version_short; ?></span>
-				<?php endif; ?>
-
-				<?php $dimensions = $product->get_dimensions(false); ?>
-				<?php if ($dimensions): ?>
-					<span class="short_description_meta">Dimensions: <?php echo wc_format_dimensions($dimensions); ?></span>
-				<?php endif; ?>
 
 				<?php if ( $product->is_type( array( 'simple', 'variable' ) ) && $product->get_sku() ) : ?>
 					<span itemprop="productID" class="sku_wrapper"><?php _e( 'Product code', ETHEME_DOMAIN ); ?>: <span class="sku"><?php echo $product->get_sku(); ?></span></span>

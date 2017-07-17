@@ -12,7 +12,9 @@ Text Domain:  adelman-fine-art-child
 a.add_to_wishlist.single_add_to_wishlist.button.alt:hover {
     color: #fff;
 }
-.content a {
+.content a, 
+.quick-view-popup .product-info .posted_in a, 
+.single-product-page .product-info .posted_in a {
   color: #009ba6;
   text-decoration: none;
   outline: none;
@@ -496,6 +498,20 @@ figure.artist-thumbnail:last-child {
 
 /* Hide SKU on single product */
 .single-product-page .product-info .sku_wrapper {
+  display: none;
+}
+
+/* Hide Product Information title in product meta on single product */
+.single-product-page .product-info  .product_meta > h4:first-of-type {
+  display: none;
+}
+
+/* Hide first occurence of Categories to show it in the desired place */
+.single-product-page .product-info  .product_meta > span.posted_in ~.posted_in {
+  display: inline;
+}
+
+.single-product-page .product-info .product_meta > span.posted_in {
   display: none;
 }
 

@@ -585,6 +585,32 @@ function adelman_add_new_icon_timeout() {
 }
 add_action( 'init', 'adelman_add_new_icon_timeout' );
 
+
+// **********************************************************************// 
+// ! WooCommerce Hooks
+// **********************************************************************// 
+
+function adelman_single_product_summary_hook() {
+  global $product;
+  ?>
+  <span class="artist_name_wrapper"><?php adelman_product_artist(); ?></span>
+  
+  <?php $version_short = $product->get_attribute( 'pa_version-short' ); ?>
+  <?php if($version_short): ?>
+    <span class="short_description_meta">Version: <?php echo $version_short; ?></span>
+  <?php endif; ?>
+
+  <?php $dimensions = $product->get_dimensions(false); ?>
+  <?php if ($dimensions): ?>
+    <span class="short_description_meta">Dimensions: <?php echo wc_format_dimensions($dimensions); ?></span>
+  <?php endif; ?>
+
+  <?php echo wc_get_product_category_list( $product->get_id(), ', ', '<span class="short_description_meta">' . _n( 'Category:', 'Categories:', count( $product->get_category_ids() ), 'woocommerce' ) . ' ', '</span>' );
+}
+
+add_action( 'woocommerce_single_product_summary', 'adelman_single_product_summary_hook', 5);
+
+
 // **********************************************************************// 
 // ! Auction Stuff (Cron jobs)
 // **********************************************************************//

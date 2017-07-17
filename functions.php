@@ -620,19 +620,30 @@ function adelman_hide_add_to_cart_for_reserved($product) {
   $reserved = get_field('reserved', $product->get_id());
 
   if($reserved):
-    echo '
+    ?>
       <style>
         button.etheme-simple-product.single_add_to_cart_button.button {
           display: none;
         }
       </style>
       <h4>This item is reserved</h4>
-    ';
+    <?php
   endif;
 }
 
 add_filter('woocommerce_before_add_to_cart_form', 'adelman_hide_add_to_cart_for_reserved', 100);
 
+// Add custom filter items to product archive
+function adelman_custom_filters_for_archive_product() {
+  ?>
+  <div class="gallery-filter-top">
+    <?php dynamic_sidebar( 'art-category-top' ); ?>
+    <?php dynamic_sidebar( 'jewelry-category-top' ); ?>
+  </div>
+  <?php
+}
+
+add_action('woocommerce_before_shop_loop', 'adelman_custom_filters_for_archive_product', 10);
 
 // **********************************************************************// 
 // ! Auction Stuff (Cron jobs)

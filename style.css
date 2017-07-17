@@ -521,13 +521,9 @@ figure.artist-thumbnail:last-child {
 }
 .gallery-filter-top h3 {
   font-size: 12px;
-  /*float: left;*/
-  /*margin-bottom: 0px;*/
   padding-top: 4px;
 }
 .gallery-filter-top .widget-container {
-  /*display: inline;*/
-  /*margin-bottom: 0px;*/
   height: auto;
 }
 .widget-container.woocommerce select {
@@ -549,18 +545,19 @@ figure.artist-thumbnail:last-child {
 small.count { 
   display: none !important; 
 }
+
 .widget_layered_nav ul li a { 
   padding-left: 0px; 
 }
+
 .widget_layered_nav ul li.chosen { 
   padding-left: 0px; 
 }
-.toolbar .woocommerce-ordering {
-  /*float: right;*/
-}
+
 .toolbar-bottom .woocommerce-ordering {
   display: none;
 }
+
 .toolbar-top select {
   border: none;
   padding-top: 7px;
@@ -579,6 +576,22 @@ small.count {
   display: none;
 }
 .toolbar.toolbar-top { margin-top: 0px !important; }
+
+/* Postion "Sort By" label */
+form.woocommerce-ordering:before {
+  content: 'Sort By';
+  font-size: 12px;
+  float: none;
+  margin-bottom: 20px;
+  padding-top: 4px;
+  color: #000000;
+  font-family: Playfair Display;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  display: block;
+  font-weight: normal;
+}
 
 /* Hide bug with subject filter showing on categories page */
 div#woocommerce_layered_nav-17 {

@@ -604,9 +604,9 @@ function adelman_single_product_summary_hook() {
     <span class="short_description_meta">Version: <?php echo $version_short; ?></span>
   <?php endif; ?>
 
-  <?php $dimensions = $product->get_dimensions(false); ?>
-  <?php if ($dimensions): ?>
-    <span class="short_description_meta">Dimensions: <?php echo wc_format_dimensions($dimensions); ?></span>
+  <?php $dimensions = wc_format_dimensions($product->get_dimensions(false)); ?>
+  <?php if ($dimensions && $dimensions != 'N/A'): ?>
+    <span class="short_description_meta">Dimensions: <?php echo $dimensions; ?></span>
   <?php endif; ?>
 
   <?php echo wc_get_product_category_list( $product->get_id(), ', ', '<span class="short_description_meta">' . _n( 'Category:', 'Categories:', count( $product->get_category_ids() ), 'woocommerce' ) . ' ', '</span>' );

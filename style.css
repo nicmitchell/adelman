@@ -143,20 +143,6 @@ span.out-of-stock:not(.label-icon) {
     left: 0;
 }
 
-/* Replace 'Social' with 'Share' on Product page */
-.share-button-title{
-  font-size: 14px;
-  text-transform: uppercase;
-  color: #000000;
-  width: 100%;
-  float: left;
-  padding-bottom: 5px;
-  text-align: left;
-  border-bottom: 1px solid #ebebeb;
-  margin-bottom: 10px;
-}
-.share-title { display:none; }
-
 /* Hide big red Sold Out badge on single product page */
 .content .row.product-info span.soldout {
   display: none;
@@ -494,6 +480,10 @@ figure.artist-thumbnail:last-child {
 .single-product-page .product-info .artist_name_wrapper span, 
 .single-product-page .product-info .short_description_meta span {
   color: #6f6f6f !important;
+}
+
+.quick-view-popup .product-info .short-description, .single-product-page .product-info .short-description {
+  float: none;
 }
 
 /* Hide SKU on single product */

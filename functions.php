@@ -489,6 +489,9 @@ function adelman_change_text_strings( $translated_text, $text, $domain ) {
     case 'Out of stock' :
       $translated_text = __( 'Sold', 'ETHEME_DOMAIN' );
       break;
+    case 'Social' : 
+      $translated_text = __( 'Share', 'ETHEME_DOMAIN');
+      break;
   }
   return $translated_text;
 }
@@ -590,6 +593,7 @@ add_action( 'init', 'adelman_add_new_icon_timeout' );
 // ! WooCommerce Hooks
 // **********************************************************************// 
 
+// Display custom information in product description and change where categories show up
 function adelman_single_product_summary_hook() {
   global $product;
   ?>
@@ -609,6 +613,25 @@ function adelman_single_product_summary_hook() {
 }
 
 add_action( 'woocommerce_single_product_summary', 'adelman_single_product_summary_hook', 5);
+
+// Hide the add to cart button if an item is reserved
+function adelman_hide_add_to_cart_for_reserved($product) {
+  global $product;
+  $reserved = get_field('reserved', $product->get_id());
+
+  if($reserved):
+    echo '
+      <style>
+        button.etheme-simple-product.single_add_to_cart_button.button {
+          display: none;
+        }
+      </style>
+      <h4>This item is reserved</h4>
+    ';
+  endif;
+}
+
+add_filter('woocommerce_before_add_to_cart_form', 'adelman_hide_add_to_cart_for_reserved', 100);
 
 
 // **********************************************************************// 

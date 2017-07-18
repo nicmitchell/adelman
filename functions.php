@@ -618,8 +618,9 @@ add_action( 'woocommerce_single_product_summary', 'adelman_single_product_summar
 function adelman_hide_add_to_cart_for_reserved($product) {
   global $product;
   $reserved = get_field('reserved', $product->get_id());
+  $in_stock = $product->is_in_stock();
 
-  if($reserved):
+  if($reserved && $is_in_stock):
     ?>
       <style>
         button.etheme-simple-product.single_add_to_cart_button.button {

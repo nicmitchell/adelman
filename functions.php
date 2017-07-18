@@ -319,7 +319,7 @@ function adelman_filter_products_by_featured_status() {
     if ($typenow=='product') :
 
       // Featured/ Not Featured
-      $output .= "<select name='featured_status' id='dropdown_featured_status'>";
+      $output = "<select name='featured_status' id='dropdown_featured_status'>";
       $output .= '<option value="">'.__( 'Show All Featured Statuses', 'woocommerce' ).'</option>';
 
       $output .="<option value='featured' ";

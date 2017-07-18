@@ -15,11 +15,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $product, $woocommerce_loop;
 $providers = get_field('provider');
 $product = get_the_id();
+$provider_type = '';
+$provider = null;
 
 if( $providers ):
   foreach( $providers as $provider ): 
-    $provider = $provider->ID;
-    $provider_type = get_post_type($provider);
+    if($provider):
+      $provider = $provider->ID;
+      $provider_type = get_post_type($provider);
+    endif;
   endforeach;
 endif;
 

@@ -618,7 +618,7 @@ add_action( 'woocommerce_single_product_summary', 'adelman_single_product_summar
 function adelman_hide_add_to_cart_for_reserved($product) {
   global $product;
   $reserved = get_field('reserved', $product->get_id());
-  $in_stock = $product->is_in_stock();
+  $is_in_stock = $product->is_in_stock();
 
   if($reserved && $is_in_stock):
     ?>
@@ -632,7 +632,7 @@ function adelman_hide_add_to_cart_for_reserved($product) {
   endif;
 }
 
-add_filter('woocommerce_before_add_to_cart_form', 'adelman_hide_add_to_cart_for_reserved', 100);
+add_action('woocommerce_single_product_summary', 'adelman_hide_add_to_cart_for_reserved', 100);
 
 // Add custom filter items to product archive
 function adelman_custom_filters_for_archive_product() {

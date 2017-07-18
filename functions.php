@@ -369,34 +369,23 @@ add_filter( 'parse_query', 'adelman_featured_products_admin_filter_query' );
 function sold_out_products_shortcode( $atts ) {
   global $woocommerce_loop, $woocommerce, $sold_out_shortcode_used;
   $sold_out_shortcode_used = true;
-
-  extract( shortcode_atts( array(
-    'per_page'  => '12',
-    'columns'   => '4',
-    'orderby' => 'meta_value_num',
-    'order' => 'desc'
-  ), $atts) );
-
-  $meta_query = array();
-  $meta_query[] = array(
-    'key'     => '_visibility',
-    'value'   => array( 'visible', 'catalog' ),
-    'compare' => 'IN'
-  );
-  $meta_query[] = array(
-    'key'     => '_stock_status',
-    'value'   => 'outofstock',
-    'compare'   => '='
+  
+  $meta_query = array(
+    'sold_clause' => array(
+      'key' => 'sold_date',
+      'compare' => '>',
+      'value' => 0
+    )
   );
 
   $args = array(
     'post_type' => 'product',
     'post_status' => 'publish',
     'ignore_sticky_posts' => 1,
-    'posts_per_page' => $per_page,
-    'orderby' => $orderby,
-    'order' => $order,
-    'meta_key' => 'sold_date',
+    'posts_per_page' => 12,
+    'orderby' => array(
+      'sold_clause' => 'DESC',
+    ),
     'meta_query' => $meta_query
   );
 

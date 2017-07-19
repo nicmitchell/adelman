@@ -128,6 +128,8 @@ add_action('init', 'cptui_register_my_cpt_jeweler');
 function adelman_artists_per_page( $query ) {
   if( $query->is_main_query() && $query->is_post_type_archive('artist') ) {
     $query->set( 'posts_per_page', -1 );
+    $query->set( 'orderby', 'menu_order');
+    $query->set( 'order', 'ASC');
   }
 }
 add_filter( 'pre_get_posts', 'adelman_artists_per_page' );
@@ -383,9 +385,8 @@ function sold_out_products_shortcode( $atts ) {
     'post_status' => 'publish',
     'ignore_sticky_posts' => 1,
     'posts_per_page' => 12,
-    'orderby' => array(
-      'sold_clause' => 'DESC',
-    ),
+    'orderby' => 'meta_value date',
+    'order' => 'DESC',
     'meta_query' => $meta_query
   );
 

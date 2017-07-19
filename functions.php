@@ -394,8 +394,6 @@ function sold_out_products_shortcode( $atts ) {
 
   $products = new WP_Query( $args );
 
-  $woocommerce_loop['columns'] = $columns;
-
   if ( $products->have_posts() ) : ?>
 
     <?php woocommerce_product_loop_start(); ?>

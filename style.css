@@ -463,7 +463,6 @@ figure.artist-thumbnail:last-child {
 .post-type-archive-artist .blog-post.post-grid .post-information .post-info { margin-bottom: 10px; }
 
 /* Single product thumbnails */
-.single-product .thumbnails .flex-viewport { /*overflow: visible !important; */ width: 1200px;}
 .single-product .thumbnails { margin-left: 0; }
 .single-product .thumbnails .product-thumbnails-slider { margin-left: 0; width: auto; }
 

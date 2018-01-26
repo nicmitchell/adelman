@@ -448,12 +448,13 @@ figure.artist-thumbnail:last-child {
 /* Artist filters */
 .artist-filters {
   clear: both;
-  min-height: 75px;
+  /*min-height: 75px;*/
 }
 
 #afa-filter-out-of-stock, .artist-filters label {
   float: left;
   margin-top: 8px;
+  font-size: 16px;
 }
 
 #afa-edition-filter {

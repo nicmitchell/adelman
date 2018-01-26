@@ -22,11 +22,6 @@
 		<div class="row">
 			<div class="content span12">
 				<div class="artist-filters">
-					<select id="afa-edition-filter" style="margin: 0px 15px 25px 15px;">
-						<option value="all">All</option>
-						<option value="original">Original</option>
-						<option value="limited">Limited Edition</option>
-					</select>
 					<input type="checkbox" id="afa-filter-out-of-stock"><label for="afa-filter-out-of-stock">Hide Sold Items</label>
 				</div>
 
@@ -60,24 +55,6 @@
 							// Toggle "Sold" visibility
 							jQuery('#afa-filter-out-of-stock').on('change', function(){
 								jQuery('.product.outofstock').toggle(!jQuery(this).is(':checked'));
-							});
-
-							// Handle <select> ... show all products, hide as appropriate
-							jQuery('#afa-edition-filter').on('change', function () {
-								jQuery('.product').show();
-								var selected = this.value; // Select value
-								var showSold = !jQuery('#afa-filter-out-of-stock').is(':checked');
-								var original = '.pa_version-short-original-artwork';
-								var originals = jQuery('.product' + original);
-								var limiteds = jQuery('.product').not(original);
-
-								if (selected === 'original') {
-									limiteds.hide();
-								}
-								if (selected === 'limited') {
-									originals.hide();
-								}
-								jQuery('.product.outofstock').toggle(showSold);
 							});
 						});
 					</script>

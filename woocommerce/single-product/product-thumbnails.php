@@ -2,18 +2,21 @@
 /**
  * Single Product Thumbnails
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/single-product/product-thumbnails.php.
+ * Why we need this override:
+ * Grid needs to be 6 instead of 3:
+  ```
+   function getGridSize() {
+      return (window.innerWidth < 600) ? 3 :
+        (window.innerWidth < 1200) ? 6 : 6; // Needs to be 6 instead of 3
+   }
+   ```
  *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
  *
- * @see       https://docs.woocommerce.com/document/template-structure/
+ * Would be better to solve this with JS
+
  * @author    WooThemes
  * @package   WooCommerce/Templates
- * @version     3.1.0
+ * @version     3.3.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,7 +33,7 @@ $has_video = false;
 
 $video_attachments = array();
 $videos = et_get_attach_video( $product->get_id() ); 
-//$videos = explode(',', $videos[0]);
+
 if(isset($videos[0]) && $videos[0] != '') {
   $video_attachments = get_posts( array(
     'post_type' => 'attachment',
@@ -50,16 +53,9 @@ if ( (has_post_thumbnail() && ( $has_video || $attachment_ids)) || ( $has_video 
     $loop = 0;
     $columns = apply_filters( 'woocommerce_product_thumbnails_columns', 3 );
 
-    
-    if ( etheme_get_option('single_product_thumb_width') != '' && etheme_get_option('single_product_thumb_height') != '' ) {
-      $image_size   = array();
-      $image_size[]   = etheme_get_option('product_page_image_width');
-      $image_size[]   = etheme_get_option('product_page_image_height');
-    } else {
-      $image_size = apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' );
-    }
+    $image_size = apply_filters( 'single_product_small_thumbnail_size', 'shop_catalog' );
 
-    $image = get_the_post_thumbnail_url( $post->ID, $image_size );
+    $image = get_the_post_thumbnail_url( $post->ID, 'shop_catalog' );
 
     
   ?>
@@ -74,7 +70,6 @@ if ( (has_post_thumbnail() && ( $has_video || $attachment_ids)) || ( $has_video 
             <?php 
 
             $full_size_image = wp_get_attachment_image_src( $value, 'full' );
-            $thumbnail       = wp_get_attachment_image_src( $value, 'shop_thumbnail' );
             $attributes      = array(
             'title'                   => get_post_field( 'post_title', $value ),
             'data-caption'            => get_post_field( 'post_excerpt', $value ),
@@ -94,13 +89,13 @@ if ( (has_post_thumbnail() && ( $has_video || $attachment_ids)) || ( $has_video 
       
       <?php if(et_get_external_video( $product->get_id() )): ?>
         <li class="video-thumbnail">
-          <span><?php _e('Video', ETHEME_DOMAIN); ?></span>
+          <span><?php _e('Video', 'legenda'); ?></span>
         </li>
       <?php endif; ?>
       
       <?php if(count($video_attachments)>0): ?>
         <li class="video-thumbnail">
-          <span><?php _e('Video', ETHEME_DOMAIN); ?></span>
+          <span><?php _e('Video', 'legenda'); ?></span>
         </li>
       <?php endif; ?>
       
@@ -111,7 +106,6 @@ if ( (has_post_thumbnail() && ( $has_video || $attachment_ids)) || ( $has_video 
             <?php 
             
             $full_size_image = wp_get_attachment_image_src( $value, 'full' );
-            $thumbnail       = wp_get_attachment_image_src( $value, 'shop_thumbnail' );
             $attributes      = array(
             'title'                   => get_post_field( 'post_title', $value ),
             'data-caption'            => get_post_field( 'post_excerpt', $value ),
@@ -141,7 +135,7 @@ if ( (has_post_thumbnail() && ( $has_video || $attachment_ids)) || ( $has_video 
      
       function getGridSize() {
         return (window.innerWidth < 600) ? 3 :
-               (window.innerWidth < 1200) ? 6 : 6;
+               (window.innerWidth < 1200) ? 3 : 3;
       }
          
       jQuery('.product-thumbnails-slider').flexslider({

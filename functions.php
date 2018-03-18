@@ -415,6 +415,12 @@ function sold_out_products_shortcode( $atts ) {
 
 add_shortcode( 'sold_out_products', 'sold_out_products_shortcode' );
 
+function loop_columns() {
+  return 6; // 6 products per row default
+}
+
+add_filter('loop_shop_columns', 'loop_columns', 999);
+
 // **********************************************************************// 
 // ! Sort Products Order
 // **********************************************************************// 

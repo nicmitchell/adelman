@@ -32,7 +32,23 @@ var toggleCustomEngraving = function(){
   });
 };
 
+// Disables right click on product pages
+var disableProductRightClick = function() {
+  jQuery('body').on('contextmenu', function(e){
+    e.stopPropagation();
+    var disallowed = ['mfp-img'];
+    var current = e.target.classList.value;
+    return !disallowed.includes(current);
+  });
+
+  jQuery('.main-image-slider').on('contextmenu', function(e){
+    e.stopPropagation();
+    return false;
+  });
+}
+
 jQuery(document).ready(function(){
   showLightboxTitle();
   toggleCustomEngraving();
+  disableProductRightClick();
 });

@@ -450,6 +450,19 @@ class iWC_Orderby_Stock_Status {
 }
 new iWC_Orderby_Stock_Status;
 
+// Modify the default WooCommerce orderby dropdown
+// Removing auction options
+function afa_woocommerce_catalog_orderby( $orderby ) {
+  unset($orderby["popularity"]);
+  unset($orderby["bid_asc"]);
+  unset($orderby["bid_desc"]);
+  unset($orderby["auction_end"]);
+  unset($orderby["auction_started"]);
+  unset($orderby["auction_activity"]);
+  return $orderby;
+}
+add_filter( "woocommerce_catalog_orderby", "afa_woocommerce_catalog_orderby", 20 );
+
 
 // **********************************************************************//
 // ! Abstract Related Products Params

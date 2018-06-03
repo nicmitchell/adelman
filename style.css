@@ -57,6 +57,15 @@ a.add_to_wishlist.single_add_to_wishlist.button.alt:hover {
 body.blog .post-images { border: 1px solid #ddd; }
 body.blog .blog-masonry .post-info { display: none; }
 body.single-post .post-info { display: none; }
+
+body img, body a.main-image {
+  -webkit-touch-callout:none;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 .page-heading h1 { line-height: 1.2; }
 
 /* Hide author meta on blog archive */

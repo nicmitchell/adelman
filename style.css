@@ -58,12 +58,50 @@ body.blog .post-images { border: 1px solid #ddd; }
 body.blog .blog-masonry .post-info { display: none; }
 body.single-post .post-info { display: none; }
 
+/*Disable image long press */
 body img, body a.main-image {
   -webkit-touch-callout:none;
-  -webkit-user-select: none; /* Chrome all / Safari all */
+  -webkit-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+/* Zoom icon */
+a.woocommerce-product-gallery__trigger {
+    background: #009ba6;
+    color: #fff;
+    display: block;
+    position: absolute;
+    height: 3em;
+    width: 3em;
+    top: 0;
+    right: .875em;
+    border-radius: 3px;
+    text-align: center;
+    z-index: 99;
+}
+
+a.woocommerce-product-gallery__trigger:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f00e";
+    display: block;
+    font-family: 'FontAwesome';
+    font-size: large;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 2;
+}
+
+a.woocommerce-product-gallery__trigger:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+a.woocommerce-product-gallery__trigger .emoji {
+    display: none !important;
 }
 
 .page-heading h1 { line-height: 1.2; }

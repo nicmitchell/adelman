@@ -3,6 +3,8 @@
 // **********************************************************************// 
 // ! Enqueue Files and Styles
 // **********************************************************************// 
+add_theme_support( 'wc-product-gallery-zoom' );
+add_theme_support( 'wc-product-gallery-lightbox' );
 
 // Enqueue the parent styles
 function theme_enqueue_styles() {
